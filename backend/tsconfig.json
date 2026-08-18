@@ -1,0 +1,19 @@
+{
+  
+  "compilerOptions": {
+
+    "rootDir": "./src", // Define onde está o código fonte 
+    "outDir": "./dist", // Define onde os arquivos JavaScript compilados serão salvos
+
+    "module": "NodeNext", // Define sistema de módulos (CommonJS ou ES Modules)
+    "target": "ESNext", // Define para qual versão do JS o TS vai compilar 
+
+    "types": ["node"], // Carrega as definições do tipo Node. Após instalar "npm install -D @types/node" o TS passa a reconhecer APIs do Node
+
+    "strict": true, // Modo rigoroso do TS, compilador encontra erros antes da execução
+    "sourceMap": true, // Gera arquivos .map que relcionam o JS compilado ao TS original
+
+    "isolatedModules": true, // Garante que cada arquivo TS possa ser compilado de forma independente
+    "skipLibCheck": true // Faz o TS ignorar a verificação dos arquivos de tipos (.d.ts) das dependências instaladas.
+  }
+}
