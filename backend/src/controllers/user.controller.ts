@@ -1,4 +1,3 @@
-// Preciso passar a senha em formato hash
 import bcrypt from "bcrypt";
 import { type Request, type Response} from "express";
 import pool from "../config/database.js";
