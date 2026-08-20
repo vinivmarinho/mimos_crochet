@@ -19,4 +19,29 @@ async function createUser(req: Request, res: Response) {
     }
 };
 
-export { createUser };
+async function login(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    // Preciso verificar se email existe no meu banco
+    const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
+    const user = result.rows[0];
+    if (!user) {
+        return res.status(401).json({
+            message: "Email ou senha inválidos"
+        })
+    };
+    // Preciso comparar o hash da senha com a senha enviada
+    const passwordIsValid = await bcrypt.compare(password, user.password_hash);
+
+    if (!passwordIsValid) {
+        return res.status(401).json({
+            message: "Email ou senha inválidos"
+        })
+    };
+
+    res.status(200).json({
+        message: user
+    });
+
+}
+export { createUser, login };

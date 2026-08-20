@@ -2,24 +2,24 @@ import { NextFunction, type Request, type Response } from "express";
 import validator from "validator";
 
 async function validateUser(req: Request, res: Response, next: NextFunction) {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
 
     // Verifica se algum campo não foi enviado (undefined) ou possui valor null
-    if (name == null || email == null || password == null) {
+    if (name == null || email == null || password == null || confirmPassword == null) {
         return res.status(401).json({
             message: "Todos os campos devem ser preenchidos"
         })
     }
 
     // Verifica se campos são strings
-    if (typeof name != "string" || typeof email != "string" || typeof password != "string") {
+    if (typeof name != "string" || typeof email != "string" || typeof password != "string" || typeof password !== "string") {
         return res.status(401).json({
             message: "Todos os campos devem ser do tipo string"
         })
     }
 
      // Verifica se algum campo é uma string vazia ou contém apenas espaços
-    if (name.trim() === "" || email.trim() === "" || password.trim() === "") {
+    if (name.trim() === "" || email.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
         return res.status(401).json({
             message: "Os campos não podem estar vazios"
         })
@@ -45,7 +45,12 @@ async function validateUser(req: Request, res: Response, next: NextFunction) {
             message: "A senha deve possuir no máximo 72 caracteres"
         })
     };
-    
+        
+    if (password !== confirmPassword) {
+        return res.status(401).json({
+            message: "As senhas não coincidem "
+        })
+    }
     next()
 };
 
