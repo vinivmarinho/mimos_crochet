@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import { type Request, type Response} from "express";
 import pool from "../config/database.js";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 async function createUser(req: Request, res: Response) {
     try {
@@ -19,18 +21,20 @@ async function createUser(req: Request, res: Response) {
     }
 };
 
+
 async function login(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    // Preciso verificar se email existe no meu banco
     const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
     const user = result.rows[0];
+    // Não revela se email existe para evitar enumeração de usuários
     if (!user) {
         return res.status(401).json({
             message: "Email ou senha inválidos"
         })
     };
-    // Preciso comparar o hash da senha com a senha enviada
+    
+
     const passwordIsValid = await bcrypt.compare(password, user.password_hash);
 
     if (!passwordIsValid) {
@@ -39,9 +43,25 @@ async function login(req: Request, res: Response) {
         })
     };
 
-    res.status(200).json({
-        message: user
-    });
+    // Gera um JWT assinado (com a chave secreta) que identifica o usuário e expira em 1 hora
+    const token = jwt.sign(
+        {
+            userId: user.user_id,
+            email: user.email
+        },
+        process.env.JWT_SECRET!,
+        {
+            expiresIn: "1h"
+        }
+    );
 
+    // Retorna o token para ser utilizado nas próximas requisições autenticadas
+    return res.status(200).json({
+        token,
+        user: {
+            id: user.user_id,
+            email: user.email
+        }
+    });
 }
 export { createUser, login };
