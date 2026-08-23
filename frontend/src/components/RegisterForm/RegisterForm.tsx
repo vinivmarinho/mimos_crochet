@@ -4,7 +4,7 @@ export default function RegisterForm() {
     return(
         <>
             <form className="register-form">
-                <img src="../public/logo.jpeg" alt="Logo da marca mimos crochet" className="form-logo" />
+                <img src="/logo.jpeg" alt="Logo da marca mimos crochet" className="form-logo" />
 
                 <h2>Cadastro de usuário</h2>
                 
