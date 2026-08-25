@@ -21,6 +21,25 @@ body {
 /* 
     MOBILE-FIRST (Estilo padrão para celular)
 */
+/* Toasts */
+.toast {
+  border-radius: 14px !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  box-shadow: 0 6px 20px rgba(191, 137, 182, 0.25) !important;
+  border: 1px solid var(--border-color) !important;
+}
+.success-toast {
+  background-color: #f5eaf2 !important;
+  color: var(--plum-dark) !important;
+  border-left: 5px solid var(--pink-yarn) !important;
+}
+.error-toast {
+  background-color: #f9edf4 !important;
+  color: var(--plum-dark) !important;
+  border-left: 5px solid var(--plum-dark) !important;
+}
 
 /* Estilos da logo */
 .form-logo {
