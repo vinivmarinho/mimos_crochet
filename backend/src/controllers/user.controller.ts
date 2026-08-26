@@ -8,7 +8,7 @@ async function createUser(req: Request, res: Response) {
     try {
         const {name, email, password } = req.body;
         const password_hash = await bcrypt.hash(password, 10);
-
+        
         await pool.query(`INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3)`, [name, email, password_hash]);
 
         res.status(200).json({
@@ -16,7 +16,7 @@ async function createUser(req: Request, res: Response) {
         })
     } catch(error) {
         res.status(500).json({
-            message: `Não foi possível cadastrar usuário`
+            message: `Não foi possível cadastrar usuário. Erro: ${error}`
         })
     }
 };
@@ -33,7 +33,7 @@ async function login(req: Request, res: Response) {
             return res.status(401).json({
                 message: "Email ou senha inválidos"
             })
-        };
+        };  
         
 
         const passwordIsValid = await bcrypt.compare(password, user.password_hash);
@@ -55,10 +55,15 @@ async function login(req: Request, res: Response) {
                 expiresIn: "1h"
             }
         );
+        // Envia o token em um cookie chamado "access_token". Navegador irá armazená-lo
+        res.cookie("access_token", token, {
+            httpOnly: true, // Impede que o cookie seja acessado por JavaScript
+            secure: true, // O cookie só é enviado através de Https
+            sameSite: "lax" // Ajuda a proteger contra ataques CSRF
+        });
 
-        // Retorna o token para ser utilizado nas próximas requisições autenticadas
+        // Retorna dados do usuário para serem utilizados pelo frontend
         return res.status(200).json({
-            token,
             user: {
                 id: user.user_id,
                 email: user.email
