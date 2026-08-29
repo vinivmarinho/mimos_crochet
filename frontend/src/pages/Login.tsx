@@ -1,7 +1,11 @@
+import "./login.css";
 import LoginForm from "../components/LoginForm/LoginForm";
 
 export default function Login() {
     return(
-        <LoginForm />
+        <div className="page">
+            <LoginForm />
+        </div>
+        
     )
 }

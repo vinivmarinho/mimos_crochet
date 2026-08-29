@@ -1,0 +1,17 @@
+.page {
+    animation: fadeIn 500ms ease-out; /* Transição suave quando a página é renderizada*/
+}
+
+@keyframes fadeIn {
+    from {
+        /* Começa um pouco transparente e abaixo de sua posição final*/
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        /* Termina visível e na sua posição original*/
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
