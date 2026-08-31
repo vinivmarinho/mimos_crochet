@@ -8,7 +8,7 @@ export default function Admin() {
             <aside className="sidebar">
 
                 <div className="sidebar-logo">
-                    <h1>Mimos</h1>
+                    <img src="./logo.jpeg" alt="" className="admin-logo" />
                 </div>
 
                 <nav className="sidebar-nav">

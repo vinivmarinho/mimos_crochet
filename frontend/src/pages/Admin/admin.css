@@ -77,20 +77,25 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.sidebar-logo h1 {
-    margin: 0;
+/* Estilos da logo */
+.admin-logo {
+  width: 110px;       
+  height: auto; /* Mantém a proporção da imagem */
+  margin: 0 auto 1.5rem auto; /* Centraliza a imagem no form e dá espaço abaixo */
+  display: block; /* Garante que o margin: auto funcione corretamente */
 
-    color: #ffffff;
+  
+  border-radius: 50%;    
+  box-shadow: 0 4px 15px rgba(191, 137, 182, 0.4); /* Sombra usando a sua cor --lilac-lace */
 
-    font-family:
-        Georgia,
-        'Times New Roman',
-        serif;
-
-    font-size: 1.7rem;
-
-    font-weight: normal;
+  transition: transform 0.3s ease;
 }
+
+/* Efeito de pulso/crescimento ao passar o mouse por cima da logo (Opcional) */
+.admin-logo:hover {
+  transform: scale(1.05);
+}
+
 
 
 /* NAVIGATION */
