@@ -2,12 +2,12 @@ import { Pool } from "pg";
 import "dotenv/config";
 
 const pool = new Pool({
-  connectionString: process.env.RENDER_DATABASE_URL,
-  ssl: process.env.RENDER_DATABASE_URL 
-      ? { rejectUnauthorized: false }
-      : false
-    // Usa ssl quando a URL do banco (na render) está definida
-});
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+})
 
 export default pool;
 
