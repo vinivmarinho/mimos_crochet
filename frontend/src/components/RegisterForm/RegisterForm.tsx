@@ -1,15 +1,19 @@
 import './registerForm.css'; 
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterForm() {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
+    const navigate = useNavigate();
     async function handleSubmit(event: React.SubmitEvent) {
         event.preventDefault();
+        
+
         if (password !== confirmPassword) {
             toast.error("As senhas não coincidem", {
                 className: "toast error-toast"
@@ -36,7 +40,6 @@ export default function RegisterForm() {
                 toast.error("Não foi possível cadastrar o usuário", {
                     className: "toast error-toast"
                 }); 
-                
                 return;
             };
 
@@ -45,7 +48,10 @@ export default function RegisterForm() {
             toast.success("Usuário cadastrado", {
                 className:"toast success-toast"
             });
-
+            setTimeout(() => {
+                navigate("/login");
+            }, 1000)
+            
         } catch(error) {
             toast.error("Não foi possível cadastrar o usuário", {
                 className: "toast error-toast"

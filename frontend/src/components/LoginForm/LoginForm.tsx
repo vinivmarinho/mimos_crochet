@@ -1,10 +1,12 @@
 import "./loginForm.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     async function handleSubmit(event: React.SubmitEvent) {
         event.preventDefault();
@@ -40,7 +42,9 @@ export default function LoginForm() {
             toast.success("Login realizado com sucesso!", {
                 className: "toast success-toast"
             });
-
+            setTimeout(() => {
+                navigate("/admin");
+            }, 1000)
         } catch (error) {
             toast.error("Não foi possível realizar o login", {
                 className: "toast error-toast"
