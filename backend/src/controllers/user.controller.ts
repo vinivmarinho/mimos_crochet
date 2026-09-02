@@ -76,4 +76,17 @@ async function login(req: Request, res: Response) {
         })
     }
 }
-export { createUser, login };
+
+async function getCurrentUser(req: Request, res: Response) {
+    return res.status(200).json({
+        message: "Usuário autorizado",
+        user: {
+            userId: req.user?.user_id,
+            email: req.user?.email,
+            role: req.user?.role
+        }
+    });
+}
+
+
+export { createUser, login, getCurrentUser};

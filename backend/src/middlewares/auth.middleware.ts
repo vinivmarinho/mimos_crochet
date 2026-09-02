@@ -32,4 +32,6 @@ function authenticateToken(req: Request, res: Response, next: NextFunction) {
         })
     }
 }
+
+export { authenticateToken };
     
