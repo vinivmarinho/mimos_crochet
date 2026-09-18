@@ -60,7 +60,7 @@ async function login(req: Request, res: Response) {
         res.cookie("access_token", token, {
             httpOnly: true, // Impede que o cookie seja acessado por JavaScript
             secure: true, // O cookie só é enviado através de Https
-            sameSite: "lax" // Ajuda a proteger contra ataques CSRF
+            sameSite: "none" // Ajuda a proteger contra ataques CSRF
         });
 
         // Retorna dados do usuário para serem utilizados pelo frontend
