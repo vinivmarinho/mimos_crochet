@@ -4,7 +4,7 @@ import "dotenv/config";
 
 function authenticateToken(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies.access_token; // Busca token que está guardado no navegador através de um cookie
-
+    
     // Se token não existir, usuário não está autenticado
     if (!token) {
         return res.status(401).json({
@@ -23,7 +23,7 @@ function authenticateToken(req: Request, res: Response, next: NextFunction) {
             });
         };
 
-        // Armazena os dados do usuário decodificados no objeto da requisição
+        // Armazena os dados do usuário decodificados no objeto da requisição para que possam ser usados pelos próximos middlewares e controllers
         req.user = decoded;
         next();
     } catch(error) {
