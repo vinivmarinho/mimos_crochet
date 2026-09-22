@@ -1,0 +1,203 @@
+.piece-form-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+
+  background-color: rgba(0, 0, 0, 0.4);
+
+  z-index: 1000;
+
+  overflow-y: auto;
+}
+
+.piece-form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  width: 90%;
+  max-width: 420px;
+  
+  max-height: 90vh;
+
+  padding: 1.5rem;
+
+  border-radius: 20px;
+
+  background-color: var(--form-bg);
+  color: var(--text-color);
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  overflow-y: auto;
+}
+
+/* BOTÃO FECHAR */
+
+.piece-form-close {
+  position: absolute;
+
+  top: 0.75rem;
+  right: 0.75rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: transparent;
+
+  color: var(--plum-dark);
+
+  font-size: 1.8rem;
+  font-weight: normal;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow: none;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.piece-form-close:hover {
+  background-color: rgba(191, 137, 182, 0.15);
+  color: var(--pink-yarn);
+}
+
+/* Título */
+
+.piece-form h2 {
+  margin-bottom: 1.25rem;
+
+  font-size: 1.5rem;
+  text-align: center;
+
+  color: var(--plum-dark);
+
+  font-family: 'Georgia', 'Times New Roman', serif;
+
+  font-weight: normal;
+}
+
+/* Labels */
+
+.piece-form label {
+  margin-bottom: 0.3rem;
+
+  font-weight: 600;
+  font-size: 0.85rem;
+
+  color: var(--text-color);
+}
+
+/* Inputs */
+
+.piece-form input,
+.piece-form select {
+  width: 100%;
+
+  padding: 0.75rem;
+
+  margin-bottom: 0.8rem;
+
+  border: 1.5px solid var(--border-color);
+
+  border-radius: 10px;
+
+  background-color: #faf7f9;
+
+  color: #333;
+
+  font-size: 0.95rem;
+
+  font-family: inherit;
+
+  transition: all 0.3s ease;
+}
+
+/* Foco */
+
+.piece-form input:focus,
+.piece-form select:focus {
+  outline: none;
+
+  border-color: var(--lilac-lace);
+
+  background-color: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(191, 137, 182, 0.25);
+}
+
+/* Select */
+
+.piece-form select {
+  cursor: pointer;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  appearance: auto;
+}
+
+/* Botão */
+
+.piece-form .submit-button {
+  margin-top: 0.5rem;
+
+  padding: 0.85rem;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background-color: var(--pink-yarn);
+
+  color: #ffffff;
+
+  font-size: 1rem;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition:
+  background-color 0.3s ease,
+  transform 0.1s ease;
+
+  box-shadow: 0 4px 12px rgba(204, 59, 124, 0.3);
+}
+
+.piece-form button:hover {
+  background-color: var(--pink-yarn-hover);
+}
+
+.piece-form button:active {
+  transform: scale(0.97);
+}
+
+/* DESKTOP */
+
+@media (min-width: 768px) {
+  .piece-form {
+    width: 420px;
+    padding: 2rem;
+  }
+}

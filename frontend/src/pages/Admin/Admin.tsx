@@ -1,7 +1,10 @@
 import "./admin.css";
 import "../pages.css";
-
+import PieceForm from "../../components/PieceForm/PieceForm";
+import { useState } from "react";
 export default function Admin() {
+    const [showForm, setShowForm] = useState(false);
+    
     return (
         <div className="page">
 
@@ -127,7 +130,7 @@ export default function Admin() {
                             </p>
                         </div>
 
-                        <button className="add-piece-button">
+                        <button className="add-piece-button" onClick={() => setShowForm(true)}>
                             + Adicionar peça
                         </button>
 
@@ -442,6 +445,9 @@ export default function Admin() {
                         </table>
                     </div>
                 </section>
+                {showForm && (
+                    <PieceForm setShowForm={setShowForm} />
+                )}
             </main>
         </div>
     );
