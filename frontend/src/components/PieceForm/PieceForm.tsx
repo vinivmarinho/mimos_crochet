@@ -1,11 +1,20 @@
+import createPiece from "../../services/pieceService";
 import "./pieceForm.css";
+
 type PieceFormProps = {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 function PieceForm({ setShowForm }: PieceFormProps) {
+  // *Talvez* o TS não esteja entendo currentTarget como um HTMLFormElement
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    await createPiece(formData);
+  }
   return (
-    <div 
+    <div
       className="piece-form-overlay"
       // Se usuário clicar no overlay (fora do form), muda o estado que controla a aparição do formulário
       onClick={(event) => {
@@ -14,7 +23,7 @@ function PieceForm({ setShowForm }: PieceFormProps) {
         }
       }}
     >
-      <form className="piece-form">
+      <form className="piece-form" onSubmit={handleSubmit}>
 
         <button
           type="button"
@@ -31,6 +40,7 @@ function PieceForm({ setShowForm }: PieceFormProps) {
           id="name"
           name="name"
           placeholder="Nome da peça"
+          required
         />
 
         <label htmlFor="price">Preço</label>
@@ -39,6 +49,7 @@ function PieceForm({ setShowForm }: PieceFormProps) {
           id="price"
           name="price"
           placeholder="Preço"
+          required
         />
 
         <label htmlFor="weight">Peso (g)</label>
@@ -47,6 +58,7 @@ function PieceForm({ setShowForm }: PieceFormProps) {
           id="weight"
           name="weight"
           placeholder="Peso da peça"
+          required
         />
 
         <label htmlFor="width">Largura (cm)</label>
@@ -55,6 +67,7 @@ function PieceForm({ setShowForm }: PieceFormProps) {
           id="width"
           name="width"
           placeholder="Largura"
+          required
         />
 
         <label htmlFor="height">Altura (cm)</label>
@@ -63,6 +76,7 @@ function PieceForm({ setShowForm }: PieceFormProps) {
           id="height"
           name="height"
           placeholder="Altura"
+          required
         />
 
         <label htmlFor="color">Cor</label>
@@ -71,12 +85,14 @@ function PieceForm({ setShowForm }: PieceFormProps) {
           id="color"
           name="color"
           placeholder="Cor da peça"
+          required
         />
 
         <label htmlFor="availabilityStatus">Disponibilidade</label>
         <select
           id="availabilityStatus"
           name="availabilityStatus"
+          required
         >
           <option value="available">Pronta entrega</option>
           <option value="made_to_order">Sob encomenda</option>
