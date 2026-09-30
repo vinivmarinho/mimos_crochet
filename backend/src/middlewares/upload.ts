@@ -3,9 +3,9 @@
 import multer from "multer";
 
 // Cria uma instância do multer
-// O memoryStorage faz com que o arquivo recebido seja armazenado temporariamente na memória do servidor (Buffer), em vez de ser salvo com um arquivo no disco
 const upload = multer({
-    // Configura o multer para armazenar o arquivo recebido temporariamente na memória do servidor
+    // memoryStorage faz o Multer manter temporariamente o arquivo recebido na memória (RAM) do servidor
+    // Disponibiliza seus dados através de req.file.buffer
     storage: multer.memoryStorage()
 });
 
