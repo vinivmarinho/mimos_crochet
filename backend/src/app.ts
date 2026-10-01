@@ -3,11 +3,14 @@ import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import imageRoutes from "./routes/image.routes.js";
+import pieceRoutes from "./routes/piece.route.js";
 
 import cookieParser from "cookie-parser";
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+
+import { type Request, type Response} from "express";
 
 const allowedOrigins = [
     process.env.LOCAL_FRONTEND_URL,
@@ -31,7 +34,6 @@ app.use(cors({
 }));    
 
 
-import { type Request, type Response} from "express";
 
 app.get("/teste", (req: Request, res: Response) => {
     res.status(200).json({
@@ -39,6 +41,7 @@ app.get("/teste", (req: Request, res: Response) => {
     })
 });
 
-app.use("/users", userRoutes)
-app.use("/images", imageRoutes)
+app.use("/users", userRoutes);
+app.use("/images", imageRoutes);
+app.use("/pieces", pieceRoutes);
 export default app;
