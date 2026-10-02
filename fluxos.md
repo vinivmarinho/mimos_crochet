@@ -20,7 +20,7 @@
 
 10. Se o usuário possuir `role: "admin"`, a requisição chega ao controller `getCurrentUser`, que retorna os dados do usuário autenticado para o frontend.
 
-
+---
 
 
 # Fluxo de cadastro de peças

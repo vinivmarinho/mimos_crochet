@@ -8,7 +8,7 @@ async function createPiece(req: Request, res: Response) {
         await pool.query(`INSERT INTO pieces (name, price, weight, width, height, color, availability_status, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [name, price, weight, width, height, color, availability_status, image_url]);
 
         return res.status(200).json({
-            message: `Peça ${name} cadastrada com sucesso!`
+            message: `Peça ${name} cadastrada com sucesso!`,
         })
     } catch(error) {
         return res.status(400).json({
@@ -31,4 +31,5 @@ async function getPieces(req: Request, res: Response) {
         })
     }
 }
+
 export { createPiece, getPieces };

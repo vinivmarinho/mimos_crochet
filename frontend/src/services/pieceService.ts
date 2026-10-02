@@ -7,12 +7,12 @@ export default async function createPiece(formData: FormData) {
     const height = formData.get("height");
     const color = formData.get("color");
     const availability_status = formData.get("availabilityStatus");
-    const image = formData.get("image");
+    const imageField = formData.get("image");
 
-    let imageUrl: string | null = null;
-    if (image instanceof File && image.size > 0) {
-        imageUrl = await uploadImage(image);
-        console.log(imageUrl);
+    let image_url: string | null = null;
+    if (imageField instanceof File && imageField.size > 0) {
+        const image = await uploadImage(imageField);
+        image_url = image.url;
     };
 
     try {
@@ -29,7 +29,7 @@ export default async function createPiece(formData: FormData) {
                 height,
                 color,
                 availability_status,
-                imageUrl
+                image_url
             })     
         });
 
@@ -41,3 +41,4 @@ export default async function createPiece(formData: FormData) {
         return false;
     }
 };
+
