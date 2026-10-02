@@ -33,14 +33,12 @@ async function uploadImage(req: Request, res: Response) {
             }).end(file.buffer) // Envia os dados da imagem para o Cloudinary
         });
 
-        console.log(result);
 
         return res.status(200).json({
             url: result.secure_url
         });
 
     } catch(error) {
-        console.error("Erro no Cloudinary:", error);
 
         return res.status(500).json({
             message: "Erro ao enviar imagem para o Cloudinary"

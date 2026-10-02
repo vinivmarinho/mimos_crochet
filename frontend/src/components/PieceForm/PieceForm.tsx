@@ -1,17 +1,30 @@
 import createPiece from "../../services/pieceService";
 import "./pieceForm.css";
+import { toast } from "react-toastify";
 
 type PieceFormProps = {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 function PieceForm({ setShowForm }: PieceFormProps) {
-  // *Talvez* o TS não esteja entendo currentTarget como um HTMLFormElement
+  
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    await createPiece(formData);
+
+    try {
+      await createPiece(formData);
+      toast.success("Peça cadastrada com sucesso", {
+        className: "toast success-toast"
+      });
+    } catch(error) {
+      toast.error("Não foi possível cadastrar a peça", {
+        className: "toast error-toast"
+      })
+    } finally {
+      setShowForm(false);
+    }
   }
   return (
     <div

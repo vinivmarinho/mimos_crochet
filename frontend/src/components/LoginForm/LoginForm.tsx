@@ -35,10 +35,6 @@ export default function LoginForm() {
                 return;
             }
 
-            const data = await response.json();
-
-            console.log(data);
-
             toast.success("Login realizado com sucesso!", {
                 className: "toast success-toast"
             });
@@ -49,8 +45,6 @@ export default function LoginForm() {
             toast.error("Não foi possível realizar o login", {
                 className: "toast error-toast"
             });
-
-            console.error("Erro ao realizar login:", error);
         }
     }
 

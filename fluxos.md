@@ -25,7 +25,7 @@
 
 # Fluxo de cadastro de peças
 
-1. Em `PieceForm.tsx`, usuário preenche o formulário e envia os dados para a função `createPice` em `pieceService.ts`
+1. Em `PieceForm.tsx`, usuário preenche o formulário e envia os dados armazenados em um `FormData` para a função `createPiece` em `pieceService.ts`
 
 2. `createPiece` verifica se existe uma imagem e, caso exista, envia o arquivo para a função de upload `uploadImage.ts`
 
@@ -33,8 +33,10 @@
 
 4. A requisição chega como `multipart/form-data`. O middleware `upload`, criado com o `Multer` processa essa requisição, extrai o arquivo e, usando `memoryStorage()`, mantém seus dados temporariamente na memória do servidor
 
-5. O controller `uploadImage` verifica se o arquivo existe em `req.file` e, caso exista, sobe o arquivo para a núvem utilizando o método `upload_stream()` do SDK do cloudinary. Se o upload for bem sucedido, o Cloudinary retorna os dados da imagem, incluindo sua URL, que é então retornada pela API
+5. O controller `uploadImage` verifica se o arquivo existe em `req.file` e, caso exista, sobe o arquivo para a núvem utilizando o método `upload_stream()` do SDK do cloudinary. Se o upload for bem sucedido, o Cloudinary retorna a URL da imagem, que é recebida pela API e posteriormente retornada ao frontend
 
-6. A função `uploadImage` (frontend) recebe a resposta da API, converte o corpo da resposta para JSON e retorna os dados
+6. A função `uploadImage` (frontend) recebe a resposta da API, converte o corpo da resposta para JSON e retorna a URL da imagem hospedada no `Cloudinary`
 
-7. A função `createPiece` recebe os dados retornados por `uploadImage` e utiliza a URL para criar a peça no banco de dados
+7. A função `createPiece` recebe a URL da imagem retornada por `uploadImage` e, em seguida, envia os dados da peça para a rota `POST /pieces`
+
+8. O controller `createPiece` envia os dados recebidos para o banco de dados por meio do `pool` de conexões

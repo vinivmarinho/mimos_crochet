@@ -12,7 +12,7 @@ async function createPiece(req: Request, res: Response) {
         })
     } catch(error) {
         return res.status(400).json({
-            message: `Não foi possível cadastrar a peça: ${req.body.name}`
+            message: `Não foi possível cadastrar a peça: ${req.body.name}. Erro: ${error}. Caiu no erro do controller`
         })
     }
 };
