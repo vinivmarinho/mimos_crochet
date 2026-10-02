@@ -1,5 +1,5 @@
 import uploadImage from "./uploadImage";
-export default async function createPiece(formData: FormData) {
+export async function createPiece(formData: FormData) {
     const name = formData.get("name");
     const price = formData.get("price");
     const weight = formData.get("weight");
@@ -42,3 +42,12 @@ export default async function createPiece(formData: FormData) {
     }
 };
 
+export async function getPieces() {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_RENDER_API}/pieces`);
+        const data = await response.json();
+        return(data);
+    } catch(error) {
+        return false;
+    }
+};

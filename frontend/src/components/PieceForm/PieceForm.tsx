@@ -1,4 +1,4 @@
-import createPiece from "../../services/pieceService";
+import { createPiece } from "../../services/pieceService";
 import "./pieceForm.css";
 import { toast } from "react-toastify";
 

@@ -4,7 +4,7 @@ import PieceForm from "../../components/PieceForm/PieceForm";
 import { useState } from "react";
 export default function Admin() {
     const [showForm, setShowForm] = useState(false);
-    
+
     return (
         <div className="page">
 
