@@ -17,4 +17,18 @@ async function createPiece(req: Request, res: Response) {
     }
 };
 
-export { createPiece };
+async function getPieces(req: Request, res: Response) {
+    try {
+        const response = await pool.query(`SELECT * FROM pieces`);
+
+        const data = response.rows[0];
+        return res.status(200).json({
+            data: data
+        });
+    } catch(error) {
+        return res.status(400).json({
+            message: "Não foi possível encontrar as peças"
+        })
+    }
+}
+export { createPiece, getPieces };
