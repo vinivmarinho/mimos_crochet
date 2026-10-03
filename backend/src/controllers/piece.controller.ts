@@ -21,7 +21,7 @@ async function getPieces(req: Request, res: Response) {
     try {
         const response = await pool.query(`SELECT * FROM pieces`);
 
-        const data = response.rows[0];
+        const data = response.rows;
         return res.status(200).json({
             data: data
         });
