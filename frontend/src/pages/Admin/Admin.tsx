@@ -1,9 +1,22 @@
 import "./admin.css";
 import "../pages.css";
 import PieceForm from "../../components/PieceForm/PieceForm";
-import { useState } from "react";
+import { getPieces } from "../../services/pieceService";
+import { useState, useEffect } from "react";
 export default function Admin() {
     const [showForm, setShowForm] = useState(false);
+    const [pieces, setPieces] = useState<any[]>([]);
+
+    // Sempre que o componente for montado, esse useEffect é chamado
+    useEffect(() => {
+        async function loadPieces() {
+            const data = await getPieces();
+            // Transformo os dados recebidos da API em um array para poder testar o método map.
+            const piecesData = data.data; 
+            setPieces(piecesData);
+        }
+        loadPieces();
+    }, []) 
 
     return (
         <div className="page">
@@ -169,11 +182,10 @@ export default function Admin() {
                     {/* MOBILE — CARDS */}
 
                     <div className="pieces-cards">
-
-
-                        {/* CARD 1 */}
-
-                        <article className="piece-card">
+            
+                        {pieces.map((piece) => (
+                            
+                        <article className="piece-card" key={piece.piece_id}>
 
                             <div className="piece-card-header">
 
@@ -184,13 +196,13 @@ export default function Admin() {
                                     </div>
 
                                     <div className="piece-name">
-                                        Bolsa de crochê
+                                        {piece.name}
                                     </div>
 
                                 </div>
 
                                 <span className="status available">
-                                    Disponível
+                                    {piece.availability_status}
                                 </span>
 
                             </div>
@@ -205,7 +217,7 @@ export default function Admin() {
                                     </span>
 
                                     <strong>
-                                        R$ 120,00
+                                        R$ {Number(piece.price).toFixed(0)}
                                     </strong>
 
                                 </div>
@@ -218,7 +230,7 @@ export default function Admin() {
                                     </span>
 
                                     <strong>
-                                        350 g
+                                        {Number(piece.weight).toFixed(0)} g
                                     </strong>
 
                                 </div>
@@ -231,11 +243,9 @@ export default function Admin() {
                                     </span>
 
                                     <strong>
-                                        30 × 20 cm
+                                        {piece.width} × {Number(piece.height).toFixed(0)} cm
                                     </strong>
-
                                 </div>
-
                             </div>
 
 
@@ -252,97 +262,27 @@ export default function Admin() {
                             </div>
 
                         </article>
-
-
-                        {/* CARD 2 */}
-
-                        <article className="piece-card">
-
-                            <div className="piece-card-header">
-
-                                <div className="piece-info">
-
-                                    <div className="piece-image">
-                                        IMG
-                                    </div>
-
-                                    <div className="piece-name">
-                                        Amigurumi
-                                    </div>
-
-                                </div>
-
-                                <span className="status made-to-order">
-                                    Sob encomenda
-                                </span>
-
-                            </div>
-
-
-                            <div className="piece-card-details">
-
-                                <div className="piece-detail">
-
-                                    <span>
-                                        Preço
-                                    </span>
-
-                                    <strong>
-                                        R$ 80,00
-                                    </strong>
-
-                                </div>
-
-
-                                <div className="piece-detail">
-
-                                    <span>
-                                        Peso
-                                    </span>
-
-                                    <strong>
-                                        180 g
-                                    </strong>
-
-                                </div>
-
-
-                                <div className="piece-detail">
-
-                                    <span>
-                                        Dimensões
-                                    </span>
-
-                                    <strong>
-                                        15 × 15 cm
-                                    </strong>
-
-                                </div>
-
-                            </div>
-
-
-                            <div className="piece-card-actions">
-
-                                <button>
-                                    Editar
-                                </button>
-
-                                <button>
-                                    Excluir
-                                </button>
-
-                            </div>
-
-                        </article>
+                        ))}
 
                     </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
                     {/* DESKTOP — TABLE */}
 
                     <div className="table-container">
                         <table className="pieces-table">
+                           
                             <thead>
                                 <tr>
                                     <th>
@@ -367,31 +307,32 @@ export default function Admin() {
                             </thead>
 
                             <tbody>
-                                <tr>
+                                {pieces.map((piece) => (
+                                    <tr>
                                     <td>
                                         <div className="piece-info">
                                             <div className="piece-image">
                                                 IMG
                                             </div>
                                             <span>
-                                                Bolsa de crochê
+                                                {piece.name}
                                             </span>
                                         </div>
                                     </td>
                                     <td>
-                                        R$ 120,00
+                                        R$ {piece.price}
                                     </td>
                                     <td>
-                                        350 g
+                                        {piece.weight} g
                                     </td>
                                     <td>
 
                                         <span className="status available">
-                                            Disponível
+                                            {piece.availability_status}
                                         </span>
                                     </td>
                                     <td>
-                                        30 × 20 cm
+                                        {piece.width} × {piece.height} cm
                                     </td>
                                     <td>
                                         <div className="table-actions">
@@ -405,42 +346,7 @@ export default function Admin() {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div className="piece-info">
-                                            <div className="piece-image">
-                                                IMG
-                                            </div>
-                                            <span>
-                                                Amigurumi
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        R$ 80,00
-                                    </td>
-                                    <td>
-                                        180 g
-                                    </td>
-                                    <td>
-                                        <span className="status made-to-order">
-                                            Sob encomenda
-                                        </span>
-                                    </td>
-                                    <td>
-                                        15 × 15 cm
-                                    </td>
-                                    <td>
-                                        <div className="table-actions">
-                                            <button>
-                                                Editar
-                                            </button>
-                                            <button>
-                                                Excluir
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
