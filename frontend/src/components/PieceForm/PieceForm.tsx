@@ -3,10 +3,11 @@ import "./pieceForm.css";
 import { toast } from "react-toastify";
 
 type PieceFormProps = {
-  setShowForm: React.Dispatch<React.SetStateAction<boolean>>
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+  onSuccess: () => Promise<void>;
 };
 
-function PieceForm({ setShowForm }: PieceFormProps) {
+function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
   
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -18,6 +19,9 @@ function PieceForm({ setShowForm }: PieceFormProps) {
       toast.success("Peça cadastrada com sucesso", {
         className: "toast success-toast"
       });
+      // Aguarda o carregamento das peças no componente "Admin"
+      await onSuccess();
+
     } catch(error) {
       toast.error("Não foi possível cadastrar a peça", {
         className: "toast error-toast"

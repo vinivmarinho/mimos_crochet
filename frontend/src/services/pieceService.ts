@@ -34,7 +34,7 @@ export async function createPiece(formData: FormData) {
         });
 
         if (!response.ok) {
-            throw new Error("Não foi possível cadastrar a peça. Caiu no erro do Piece Service");
+            throw new Error("Não foi possível cadastrar a peça");
         };
         return true;
     } catch(error) {

@@ -8,13 +8,13 @@ export default function Admin() {
     const [pieces, setPieces] = useState<any[]>([]);
 
     // Sempre que o componente for montado, esse useEffect é chamado
-    useEffect(() => {
-        async function loadPieces() {
-            const data = await getPieces();
-            // Transformo os dados recebidos da API em um array para poder testar o método map.
-            const piecesData = data.data; 
+    async function loadPieces() {
+        const response = await getPieces();
+         // Transformo os dados recebidos da API em um array para poder testar o método map.
+            const piecesData = response.data; 
             setPieces(piecesData);
-        }
+    }
+    useEffect(() => {
         loadPieces();
     }, []) 
 
@@ -267,17 +267,6 @@ export default function Admin() {
                     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
                     {/* DESKTOP — TABLE */}
 
                     <div className="table-container">
@@ -352,7 +341,7 @@ export default function Admin() {
                     </div>
                 </section>
                 {showForm && (
-                    <PieceForm setShowForm={setShowForm} />
+                    <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} />
                 )}
             </main>
         </div>
