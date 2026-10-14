@@ -10,6 +10,8 @@ export default function Admin() {
     const [totalPieces, setTotalPieces] = useState(0);
     const [availablePieces, setAvailablePieces] = useState(0);
     const [madeToOrderPieces, setMadeToOrderPieces] = useState(0);
+    const [selectedImage, setSelectedImage] = useState("");
+
     // Sempre que o componente for montado, esse useEffect é chamado
     async function loadPieces() {
         const response = await getPieces();
@@ -204,7 +206,8 @@ export default function Admin() {
                                 <div className="piece-info">
 
                                     <div className="piece-image-container">
-                                        <img className="piece-image" src={piece.image_url} alt="Imagem" />
+                                        <img className="piece-image" src={piece.image_url} alt="Imagem" onClick={() => setSelectedImage(piece.image_url)} />
+                                        
                                     </div>
 
                                     <div className="piece-name">
@@ -277,7 +280,8 @@ export default function Admin() {
                         ))}
 
                     </div>
-
+                    
+                   
 
                     {/* DESKTOP — TABLE */}
 
@@ -313,7 +317,7 @@ export default function Admin() {
                                     <td>
                                         <div className="piece-info">
                                             <div className="piece-image-container">
-                                                <img className="piece-image" src={piece.image_url} alt="Imagem" />
+                                                <img className="piece-image" src={piece.image_url} alt="Imagem" onClick={() => setSelectedImage(piece.image_url)} />
                                             </div>
                                             <span>
                                                 {piece.name}
@@ -352,9 +356,27 @@ export default function Admin() {
                         </table>
                     </div>
                 </section>
+                
                 {showForm && (
                     <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} />
                 )}
+                
+                {/* Renderizando o modal*/}
+                 {selectedImage && (
+                        <div
+                            className="image-modal"
+                            onClick={() => setSelectedImage("")}
+                        >
+                            <button
+                            className="close-modal"
+                            onClick={() => setSelectedImage("")}
+                            >X</button>
+
+                            <img src={selectedImage} alt="Imagem ampliada" className="enlarged-image"
+                            onClick={(event) => event.stopPropagation()}
+                            />
+                        </div>
+                    )}
             </main>
         </div>
     );
