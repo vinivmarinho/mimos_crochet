@@ -3,15 +3,27 @@ import "../pages.css";
 import PieceForm from "../../components/PieceForm/PieceForm";
 import { getPieces } from "../../services/pieceService";
 import { useState, useEffect } from "react";
+import { type Piece } from "../../types/Piece";
 export default function Admin() {
     const [showForm, setShowForm] = useState(false);
-    const [pieces, setPieces] = useState<any[]>([]);
-
+    const [pieces, setPieces] = useState<Piece[]>([]);
+    const [totalPieces, setTotalPieces] = useState(0);
+    const [availablePieces, setAvailablePieces] = useState(0);
+    const [madeToOrderPieces, setMadeToOrderPieces] = useState(0);
     // Sempre que o componente for montado, esse useEffect é chamado
     async function loadPieces() {
         const response = await getPieces();
-         // Transformo os dados recebidos da API em um array para poder testar o método map.
-            const piecesData = response.data; 
+         // Transformo os dados recebidos da API em um array
+            const piecesData = response.data;
+            console.log(piecesData); 
+            setTotalPieces(piecesData.length);
+            piecesData.map((piece: Piece) => {
+                if (piece.availability_status = "available") {
+                    setAvailablePieces(availablePieces + 1);
+                } else if (piece.availability_status = "made to order") {
+                    setMadeToOrderPieces(madeToOrderPieces + 1);
+                }
+            })
             setPieces(piecesData);
     }
     useEffect(() => {
@@ -89,7 +101,7 @@ export default function Admin() {
                         </span>
 
                         <strong className="stat-value">
-                            24
+                            {totalPieces}
                         </strong>
                     </div>
 
@@ -100,7 +112,7 @@ export default function Admin() {
                         </span>
 
                         <strong className="stat-value">
-                            15
+                            {availablePieces}
                         </strong>
                     </div>
 
@@ -111,7 +123,7 @@ export default function Admin() {
                         </span>
 
                         <strong className="stat-value">
-                            9
+                            {madeToOrderPieces}
                         </strong>
                     </div>
 
@@ -122,7 +134,7 @@ export default function Admin() {
                         </span>
 
                         <strong className="stat-value">
-                            12
+                            Em andamento
                         </strong>
                     </div>
 
@@ -191,8 +203,8 @@ export default function Admin() {
 
                                 <div className="piece-info">
 
-                                    <div className="piece-image">
-                                        IMG
+                                    <div className="piece-image-container">
+                                        <img className="piece-image" src={piece.image_url} alt="Imagem" />
                                     </div>
 
                                     <div className="piece-name">
@@ -217,7 +229,7 @@ export default function Admin() {
                                     </span>
 
                                     <strong>
-                                        R$ {Number(piece.price).toFixed(0)}
+                                        R$ {Number((piece.price)).toFixed(0)}
                                     </strong>
 
                                 </div>
@@ -300,8 +312,8 @@ export default function Admin() {
                                     <tr>
                                     <td>
                                         <div className="piece-info">
-                                            <div className="piece-image">
-                                                IMG
+                                            <div className="piece-image-container">
+                                                <img className="piece-image" src={piece.image_url} alt="Imagem" />
                                             </div>
                                             <span>
                                                 {piece.name}
