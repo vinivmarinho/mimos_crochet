@@ -5,14 +5,32 @@ import { getPieces } from "../../services/pieceService";
 import { useState, useEffect } from "react";
 import { type Piece } from "../../types/Piece";
 export default function Admin() {
-    const [showForm, setShowForm] = useState(false);
+    // ===========================================
+    // Estados
+    // ===========================================
+
+    // Peças
     const [pieces, setPieces] = useState<Piece[]>([]);
+
+    // Estatísticas do Dashboard
     const [totalPieces, setTotalPieces] = useState(0);
     const [availablePieces, setAvailablePieces] = useState(0);
     const [madeToOrderPieces, setMadeToOrderPieces] = useState(0);
-    const [selectedImage, setSelectedImage] = useState("");
+    
+    // Formulário
+    const [showForm, setShowForm] = useState(false);
 
-    // Sempre que o componente for montado, esse useEffect é chamado
+    // Barra de pesquisa
+    const [searchedInput, setSearchedInput] = useState("");
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    // Imagem 
+    const [selectedImage, setSelectedImage] = useState("");
+    
+
+    // ===========================================
+    // Data fetching
+    // ===========================================
     async function loadPieces() {
         const response = await getPieces();
          // Transformo os dados recebidos da API em um array
@@ -20,9 +38,9 @@ export default function Admin() {
             console.log(piecesData); 
             setTotalPieces(piecesData.length);
             piecesData.map((piece: Piece) => {
-                if (piece.availability_status = "available") {
+                if (piece.availability_status === "available") {
                     setAvailablePieces(availablePieces + 1);
-                } else if (piece.availability_status = "made to order") {
+                } else if (piece.availability_status === "made to order") {
                     setMadeToOrderPieces(madeToOrderPieces + 1);
                 }
             })
@@ -32,6 +50,14 @@ export default function Admin() {
         loadPieces();
     }, []) 
 
+    // ===========================================
+    // Lógica da barra de pesquisa
+    // ===========================================
+    const filteredPieces = pieces.filter((piece) => piece.name.toLowerCase().startsWith(searchedInput.trim().toLowerCase()));
+
+    // ===========================================
+    // Renderização
+    // ===========================================
     return (
         <div className="page">
 
@@ -168,12 +194,31 @@ export default function Admin() {
 
                     <div className="pieces-toolbar">
 
-                        <input
-                            type="text"
-                            placeholder="Buscar peça..."
-                            className="search-input"
-                        />
-
+                        <div className="search-bar">
+                            <input
+                                type="text"
+                                placeholder="Buscar peça..."
+                                className="search-input"
+                                value={searchedInput}
+                                onChange={(event) => {
+                                    setSearchedInput(event.target.value);
+                                    setShowSuggestions(true);
+                                }}
+                            />
+                            {/*Div das sugestões vai aqui*/}
+                            {showSuggestions && searchedInput.length > 0 && (
+                                <div className="search-suggestions">
+                                    {filteredPieces.length > 0 ? (
+                                        filteredPieces.map((piece) => (
+                                            <div key={piece.piece_id}>
+                                                {piece.name}
+                                            </div>
+                                        ))
+                                    ): <p>Nenhuma peça encontrada</p>}
+                                </div>
+                            )}
+                        </div>
+                        
                         <select className="filter-select">
 
                             <option value="">
@@ -189,9 +234,9 @@ export default function Admin() {
                             </option>
 
                         </select>
-
                     </div>
 
+                    
 
                     {/* MOBILE — CARDS */}
 
