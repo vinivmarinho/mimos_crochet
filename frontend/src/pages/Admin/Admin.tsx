@@ -100,7 +100,10 @@ export default function Admin() {
 
             <main className="main-content">
 
-                {/* HEADER */}
+                {/* ===========================================
+                    Header
+                    ===========================================
+                */}
 
                 <header className="admin-header">
 
@@ -119,7 +122,10 @@ export default function Admin() {
                 </header>
 
 
-                {/* STATISTICS */}
+                {/* ===========================================
+                    Estatísticas
+                    ===========================================
+                */}
 
                 <section className="overview">
 
@@ -169,7 +175,10 @@ export default function Admin() {
                 </section>
 
 
-                {/* PIECES */}
+                {/* ===========================================
+                    Header da toolBar
+                    ===========================================
+                */}
 
                 <section className="pieces-section">
 
@@ -190,11 +199,14 @@ export default function Admin() {
                     </div>
 
 
-                    {/* TOOLBAR */}
+                    {/* ===========================================
+                        ToolBar
+                        ===========================================
+                    */}
 
                     <div className="pieces-toolbar">
 
-                        <div className="search-bar">
+                        <div className="search-bar-div">
                             <input
                                 type="text"
                                 placeholder="Buscar peça..."
@@ -205,7 +217,7 @@ export default function Admin() {
                                     setShowSuggestions(true);
                                 }}
                             />
-                            {/*Div das sugestões vai aqui*/}
+                            
                             {showSuggestions && searchedInput.length > 0 && (
                                 <div className="search-suggestions">
                                     {filteredPieces.length > 0 ? (
@@ -219,26 +231,27 @@ export default function Admin() {
                             )}
                         </div>
                         
-                        <select className="filter-select">
-
-                            <option value="">
-                                Todos
-                            </option>
-
-                            <option value="available">
-                                Disponíveis
-                            </option>
-
-                            <option value="made-to-order">
-                                Sob encomenda
-                            </option>
-
-                        </select>
+                        <div className="filter-div">
+                            <select className="filter-select">
+                                <option value="">
+                                    Todos
+                                </option>
+                                <option value="available">
+                                    Disponíveis
+                                </option>
+                                <option value="made-to-order">
+                                    Sob encomenda
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
                     
 
-                    {/* MOBILE — CARDS */}
+                    {/* ===========================================
+                        Mobile - Cards
+                        ===========================================
+                    */}
 
                     <div className="pieces-cards">
             
@@ -328,7 +341,10 @@ export default function Admin() {
                     
                    
 
-                    {/* DESKTOP — TABLE */}
+                    {/* ===========================================
+                        Desktop - Table
+                        ===========================================
+                    */}
 
                     <div className="table-container">
                         <table className="pieces-table">
@@ -406,7 +422,10 @@ export default function Admin() {
                     <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} />
                 )}
                 
-                {/* Renderizando o modal*/}
+                {/* ===========================================
+                    Renderização do Modal
+                    ===========================================
+                */}
                  {selectedImage && (
                         <div
                             className="image-modal"

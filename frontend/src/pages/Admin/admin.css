@@ -30,12 +30,19 @@
 }
 
 
-/* MOBILE FIRST */
+/*  ===========================================
+    Mobile First
+    ===========================================
+*/
 
 * {
     box-sizing: border-box;
 }
 
+/*  ===========================================
+    Imagens das peças
+    ===========================================
+*/
 .image-modal {
     position: fixed;
     inset: 0;
@@ -71,6 +78,11 @@
     font-size: 36px;
     cursor: pointer;
 }
+
+/*  ===========================================
+    Div principal
+    ===========================================
+*/
 .page {
     min-height: 100vh;
 
@@ -89,7 +101,10 @@
 }
 
 
-/* SIDEBAR */
+/*  ===========================================
+    SideBar
+    ===========================================
+*/
 
 .sidebar {
     width: 100%;
@@ -103,16 +118,13 @@
         0 4px 20px rgba(99, 54, 83, 0.15);
 }
 
-
-/* LOGO */
-
 .sidebar-logo {
     padding: 20px;
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Estilos da logo */
+
 .admin-logo {
   width: 110px;       
   height: auto; /* Mantém a proporção da imagem */
@@ -126,14 +138,11 @@
   transition: transform 0.3s ease;
 }
 
-/* Efeito de pulso/crescimento ao passar o mouse por cima da logo (Opcional) */
+/* Efeito de pulso/crescimento ao passar o mouse por cima da logo */
 .admin-logo:hover {
   transform: scale(1.05);
 }
 
-
-
-/* NAVIGATION */
 
 .sidebar-nav {
     display: flex;
@@ -197,15 +206,17 @@
 }
 
 
-/* SIDEBAR FOOTER */
-
 .sidebar-footer {
     display: none;
 }
 
 
-/* MAIN CONTENT */
 
+
+/*  ===========================================
+    Conteúdo principal
+    ===========================================
+*/
 .main-content {
     width: 100%;
 
@@ -213,7 +224,11 @@
 }
 
 
-/* HEADER */
+
+/*  ===========================================
+    Header
+    ===========================================
+*/
 
 .admin-header {
     display: flex;
@@ -249,9 +264,6 @@
     font-size: 0.88rem;
 }
 
-
-/* ADMIN USER */
-
 .admin-user {
     display: flex;
     align-items: center;
@@ -275,7 +287,11 @@
 }
 
 
-/* STATISTICS */
+
+/*  ===========================================
+    Estatísticas
+    ===========================================
+*/
 
 .overview {
     display: grid;
@@ -337,7 +353,11 @@
 }
 
 
-/* PIECES SECTION */
+
+/*  ===========================================
+    Header da toolBar
+    ===========================================
+*/
 
 .pieces-section {
     padding: 16px;
@@ -351,9 +371,6 @@
     box-shadow:
         0 6px 24px rgba(191, 137, 182, 0.12);
 }
-
-
-/* SECTION HEADER */
 
 .section-header {
     display: flex;
@@ -388,9 +405,6 @@
 
     font-size: 0.85rem;
 }
-
-
-/* ADD PIECE BUTTON */
 
 .add-piece-button {
     width: 100%;
@@ -431,22 +445,65 @@
 }
 
 
-/* TOOLBAR */
+/*  ===========================================
+    ToolBar
+    ===========================================
+*/
 
 .pieces-toolbar {
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
-
     margin-bottom: 16px;
+}
+.search-bar-div, .filter-div {
+    width: 100%;
+}
+.search-bar-div {
+    position: relative;
+}
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 100;
+
+    max-height: 220px;
+    overflow-y: auto;
+
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.search-suggestions > div {
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    color: var(--text-color);
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.search-suggestions > div + div {
+    border-top: 1px solid var(--border-color);
+}
+
+.search-suggestions p {
+    margin: 0;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    color: var(--text-color);
 }
 
 .search-input,
 .filter-select {
     width: 100%;
 
+    
     padding: 12px 14px;
 
     border: 1.5px solid var(--border-color);
@@ -484,14 +541,22 @@
 }
 
 
-/* DESKTOP TABLE — HIDDEN ON MOBILE */
+
+/*  ===========================================
+    Desktop Table - Escondida na versão mobile
+    ===========================================
+*/
 
 .table-container {
     display: none;
 }
 
 
-/* MOBILE PIECE CARDS */
+
+/*  ===========================================
+    Cards das peças (Mobile)
+    ===========================================
+*/
 
 .pieces-cards {
     display: flex;
@@ -524,15 +589,11 @@
 
 .piece-card::before {
     content: "";
-
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 4px;
     height: 100%;
-
     background-color: var(--pink-yarn);
 }
 
@@ -544,9 +605,6 @@
 .piece-card:active {
     transform: scale(0.99);
 }
-
-
-/* CARD HEADER */
 
 .piece-card-header {
     display: flex;
@@ -598,6 +656,7 @@
 
     box-shadow: 0 3px 8px rgba(191, 137, 182, 0.15);
 }
+
 .piece-image {
     width: 100%;
     height: 100%;
@@ -614,9 +673,6 @@
 
     line-height: 1.3;
 }
-
-
-/* STATUS */
 
 .status {
     display: inline-flex;
@@ -649,9 +705,6 @@
 
     border: 1px solid #eccbdc;
 }
-
-
-/* CARD DETAILS */
 
 .piece-card-details {
     display: grid;
@@ -701,17 +754,11 @@
     font-weight: 600;
 }
 
-
-/* PREÇO */
-
 .piece-detail:first-child strong {
     color: var(--pink-yarn);
 
     font-size: 0.95rem;
 }
-
-
-/* CARD ACTIONS  */
 
 .piece-card-actions {
     display: grid;
@@ -748,9 +795,6 @@
         transform 0.1s ease;
 }
 
-
-/* EDITAR */
-
 .piece-card-actions button:first-child {
     border-color: var(--lilac-lace);
 
@@ -762,9 +806,6 @@
 .piece-card-actions button:first-child:hover {
     background-color: var(--lilac-light);
 }
-
-
-/* EXCLUIR */
 
 .piece-card-actions button:last-child {
     background-color: #ffffff;
@@ -783,14 +824,27 @@
 }
 
 
-/* TABLET  */
 
+/*  ===========================================
+    Versão Tablet
+    ===========================================
+*/
 @media (min-width: 768px) {
 
+
+    /*  ===========================================
+        Conteúdo principal
+        ===========================================
+    */
     .main-content {
         padding: 30px;
     }
 
+
+    /*  ===========================================
+        Estatísticas
+        ===========================================
+    */
     .overview {
         grid-template-columns: repeat(2, 1fr);
 
@@ -803,6 +857,11 @@
         padding: 20px;
     }
 
+
+    /*  ===========================================
+        Header da toolBar
+        ===========================================
+    */
     .pieces-section {
         padding: 24px;
     }
@@ -819,12 +878,41 @@
         width: auto;
     }
 
+    /*  ===========================================
+        ToolBar
+        ===========================================
+    */
     .pieces-toolbar {
         flex-direction: row;
     }
 
+    .search-bar-div {
+        flex: 1;
+        min-width: 0;
+    }
+
     .search-input {
         flex: 1;
+    }
+
+    .search-suggestions {
+        max-height: 300px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-suggestions > div {
+        padding: 12px 16px;
+    }
+
+    .search-suggestions > div:hover {
+        background-color: #faf7f9;
+    }   
+
+
+    .filter-div {
+        width: 200px;
+        flex-shrink: 0;
     }
 
     .filter-select {
@@ -834,10 +922,14 @@
     }
 
 
-    /* TABLE */
+    /*  ===========================================
+        Table das peças
+        ===========================================
+    */
+
 
     .pieces-cards {
-        display: none;
+        display: none; /* Esconde os cards */
     }
 
     .table-container {
@@ -920,16 +1012,25 @@
 }
 
 
-/* DESKTOP */
+/*  ===========================================
+    Versão Desktop
+    ===========================================
+*/
 
 @media (min-width: 1024px) {
-
+    /*  ===========================================
+        Div principal
+        ===========================================
+    */
     .page {
         display: flex;
     }
 
 
-    /* SIDEBAR */
+    /*  ===========================================
+        SideBar
+        ===========================================
+    */
 
     .sidebar {
         width: 250px;
@@ -982,7 +1083,10 @@
     }
 
 
-    /* MAIN */
+    /*  ===========================================
+        Conteúdo principal
+        ===========================================
+    */
 
     .main-content {
         flex: 1;
@@ -993,7 +1097,10 @@
     }
 
 
-    /* HEADER */
+   /*  ===========================================
+        Header
+        ===========================================
+    */
 
     .admin-header {
         align-items: center;
@@ -1018,7 +1125,10 @@
     }
 
 
-    /* STATISTICS */
+    /*  ===========================================
+        EStatísticas
+        ===========================================
+    */
 
     .overview {
         grid-template-columns: repeat(4, 1fr);
@@ -1045,7 +1155,10 @@
     }
 
 
-    /* PIECES */
+    /*  ===========================================
+        Header da toolBar
+        ===========================================
+    */
 
     .pieces-section {
         padding: 28px;
@@ -1066,7 +1179,10 @@
     }
 
 
-    /* TABLE */
+   /*  ===========================================
+        Table das peças
+        ===========================================
+    */
 
     .pieces-table {
         min-width: 0;
@@ -1143,10 +1259,13 @@
 }
 
 
-/* LARGE DESKTOP */
+/*  ===========================================
+    Desktop largo
+    ===========================================
+*/
 
 @media (min-width: 1200px) {
-
+    
     .main-content {
         padding: 40px 48px;
     }
