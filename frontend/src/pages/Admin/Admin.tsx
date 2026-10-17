@@ -23,7 +23,7 @@ export default function Admin() {
     // Barra de pesquisa
     const [searchedInput, setSearchedInput] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
-
+    const [clickedPiece, setClickedPiece] = useState<Piece | null>(null);
     // Imagem 
     const [selectedImage, setSelectedImage] = useState("");
     
@@ -54,6 +54,12 @@ export default function Admin() {
     // Lógica da barra de pesquisa
     // ===========================================
     const filteredPieces = pieces.filter((piece) => piece.name.toLowerCase().startsWith(searchedInput.trim().toLowerCase()));
+    // Array será usado na renderização das peças
+    const arrayToBeUsed = clickedPiece ? [clickedPiece] : pieces;
+    
+    function clearClickedPiece() {
+        setClickedPiece(null)
+    };
 
     // ===========================================
     // Renderização
@@ -207,6 +213,7 @@ export default function Admin() {
                     <div className="pieces-toolbar">
 
                         <div className="search-bar-div">
+                            <button className="search-icon">🔍</button>
                             <input
                                 type="text"
                                 placeholder="Buscar peça..."
@@ -214,15 +221,23 @@ export default function Admin() {
                                 value={searchedInput}
                                 onChange={(event) => {
                                     setSearchedInput(event.target.value);
+                                    setClickedPiece(null);
                                     setShowSuggestions(true);
                                 }}
                             />
-                            
+                            <button className="x-icon" onClick={() => {
+                                clearClickedPiece(); 
+                                setSearchedInput("")}}>
+                                    ❌
+                            </button>
                             {showSuggestions && searchedInput.length > 0 && (
                                 <div className="search-suggestions">
                                     {filteredPieces.length > 0 ? (
                                         filteredPieces.map((piece) => (
-                                            <div key={piece.piece_id}>
+                                            <div key={piece.piece_id} onClick={() => { 
+                                                setClickedPiece(piece); 
+                                                setSearchedInput(piece.name); 
+                                                setShowSuggestions(false)}}>
                                                 {piece.name}
                                             </div>
                                         ))
@@ -254,89 +269,89 @@ export default function Admin() {
                     */}
 
                     <div className="pieces-cards">
-            
-                        {pieces.map((piece) => (
+                        
+                        {arrayToBeUsed.map((piece) => (
                             
-                        <article className="piece-card" key={piece.piece_id}>
+                            <article className="piece-card" key={piece.piece_id}>
 
-                            <div className="piece-card-header">
+                                <div className="piece-card-header">
 
-                                <div className="piece-info">
+                                    <div className="piece-info">
 
-                                    <div className="piece-image-container">
-                                        <img className="piece-image" src={piece.image_url} alt="Imagem" onClick={() => setSelectedImage(piece.image_url)} />
-                                        
+                                        <div className="piece-image-container">
+                                            <img className="piece-image" src={piece.image_url} alt="Imagem" onClick={() => setSelectedImage(piece.image_url)} />
+                                            
+                                        </div>
+
+                                        <div className="piece-name">
+                                            {piece.name}
+                                        </div>
+
                                     </div>
 
-                                    <div className="piece-name">
-                                        {piece.name}
+                                    <span className="status available">
+                                        {piece.availability_status}
+                                    </span>
+
+                                </div>
+
+
+                                <div className="piece-card-details">
+
+                                    <div className="piece-detail">
+
+                                        <span>
+                                            Preço
+                                        </span>
+
+                                        <strong>
+                                            R$ {Number((piece.price)).toFixed(0)}
+                                        </strong>
+
                                     </div>
 
-                                </div>
 
-                                <span className="status available">
-                                    {piece.availability_status}
-                                </span>
+                                    <div className="piece-detail">
 
-                            </div>
+                                        <span>
+                                            Peso
+                                        </span>
 
+                                        <strong>
+                                            {Number(piece.weight).toFixed(0)} g
+                                        </strong>
 
-                            <div className="piece-card-details">
-
-                                <div className="piece-detail">
-
-                                    <span>
-                                        Preço
-                                    </span>
-
-                                    <strong>
-                                        R$ {Number((piece.price)).toFixed(0)}
-                                    </strong>
-
-                                </div>
+                                    </div>
 
 
-                                <div className="piece-detail">
+                                    <div className="piece-detail">
 
-                                    <span>
-                                        Peso
-                                    </span>
+                                        <span>
+                                            Dimensões
+                                        </span>
 
-                                    <strong>
-                                        {Number(piece.weight).toFixed(0)} g
-                                    </strong>
-
+                                        <strong>
+                                            {piece.width} × {Number(piece.height).toFixed(0)} cm
+                                        </strong>
+                                    </div>
                                 </div>
 
 
-                                <div className="piece-detail">
+                                <div className="piece-card-actions">
 
-                                    <span>
-                                        Dimensões
-                                    </span>
+                                    <button>
+                                        Editar
+                                    </button>
 
-                                    <strong>
-                                        {piece.width} × {Number(piece.height).toFixed(0)} cm
-                                    </strong>
+                                    <button>
+                                        Excluir
+                                    </button>
+
                                 </div>
-                            </div>
 
-
-                            <div className="piece-card-actions">
-
-                                <button>
-                                    Editar
-                                </button>
-
-                                <button>
-                                    Excluir
-                                </button>
-
-                            </div>
-
-                        </article>
-                        ))}
-
+                            </article>
+                            ))}
+                            
                     </div>
                     
                    
@@ -373,7 +388,7 @@ export default function Admin() {
                             </thead>
 
                             <tbody>
-                                {pieces.map((piece) => (
+                                {arrayToBeUsed.map((piece) => (
                                     <tr>
                                     <td>
                                         <div className="piece-info">
@@ -417,7 +432,11 @@ export default function Admin() {
                         </table>
                     </div>
                 </section>
-                
+
+                {/* ===========================================
+                    Formulário de cadastro de peça
+                    ===========================================
+                */}
                 {showForm && (
                     <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} />
                 )}
