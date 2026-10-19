@@ -47,5 +47,5 @@
 2. Quando o componente é renderizado novamente (através do `onChange`), a condição de exibição das sugestões é avaliada. Se as sugestões estiverem habilitadas, o map percorre o array correspondente e renderiza cada peça em uma div.
 
 3. Quando o usuário clica em uma sugestão, o `onClick` atualiza `clickedPiece` com o objeto da peça selecionada, define `searchedInput` com o nome da peça e altera `showSuggestions` para `false`, ocultando as sugestões.
-4. O valor de `clickedPiece` determina os dados utilizados na exibição: se houver uma peça selecionada, `arrayToBeUsed` contém somente essa peça; caso contrário, contém o array completo de peças recebido do backend.
+
 

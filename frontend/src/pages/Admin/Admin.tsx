@@ -19,11 +19,11 @@ export default function Admin() {
     
     // Formulário
     const [showForm, setShowForm] = useState(false);
-
+    // Filtro de status
+    const [selectedStatus, setSelectedStatus] = useState("all");
     // Barra de pesquisa
     const [searchedInput, setSearchedInput] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [clickedPiece, setClickedPiece] = useState<Piece | null>(null);
     // Imagem 
     const [selectedImage, setSelectedImage] = useState("");
     
@@ -52,13 +52,16 @@ export default function Admin() {
     // ===========================================
     // Lógica da barra de pesquisa
     // ===========================================
-    const filteredPieces = pieces.filter((piece) => piece.name.toLowerCase().startsWith(searchedInput.trim().toLowerCase()));
-    // Array será usado na renderização das peças
-    const arrayToBeUsed = clickedPiece ? [clickedPiece] : pieces;
+
+    // Filtra peças por valor do filtro de status e pelo nome na searchBar
+    const filteredPieces = pieces.filter((piece) => {
+        const matchesName = piece.name.toLowerCase().startsWith(searchedInput.trim().toLowerCase());
+
+        const matchesStatus = selectedStatus === "all" || piece.availability_status === selectedStatus;
+
+        return matchesName && matchesStatus;
+    })
     
-    function clearClickedPiece() {
-        setClickedPiece(null)
-    };
 
     // ===========================================
     // Renderização
@@ -220,12 +223,10 @@ export default function Admin() {
                                 value={searchedInput}
                                 onChange={(event) => {
                                     setSearchedInput(event.target.value);
-                                    setClickedPiece(null);
                                     setShowSuggestions(true);
                                 }}
                             />
-                            <button className="x-icon" onClick={() => {
-                                clearClickedPiece(); 
+                            <button className="x-icon" onClick={() => { 
                                 setSearchedInput("")}}>
                                     ❌
                             </button>
@@ -233,8 +234,7 @@ export default function Admin() {
                                 <div className="search-suggestions">
                                     {filteredPieces.length > 0 ? (
                                         filteredPieces.map((piece) => (
-                                            <div key={piece.piece_id} onClick={() => { 
-                                                setClickedPiece(piece); 
+                                            <div key={piece.piece_id} onClick={() => {
                                                 setSearchedInput(piece.name); 
                                                 setShowSuggestions(false)}}>
                                                 {piece.name}
@@ -246,8 +246,12 @@ export default function Admin() {
                         </div>
                         
                         <div className="filter-div">
-                            <select className="filter-select">
-                                <option value="">
+                            <select 
+                            className="filter-select"
+                            value={selectedStatus}
+                            onChange={(event) => setSelectedStatus(event.target.value)}
+                            >
+                                <option value="all">
                                     Todos
                                 </option>
                                 <option value="available">
@@ -269,7 +273,7 @@ export default function Admin() {
 
                     <div className="pieces-cards">
                         
-                        {arrayToBeUsed.map((piece) => (
+                        {filteredPieces.map((piece) => (
                             
                             <article className="piece-card" key={piece.piece_id}>
 
@@ -387,7 +391,7 @@ export default function Admin() {
                             </thead>
 
                             <tbody>
-                                {arrayToBeUsed.map((piece) => (
+                                {filteredPieces.map((piece) => (
                                     <tr>
                                     <td>
                                         <div className="piece-info">
