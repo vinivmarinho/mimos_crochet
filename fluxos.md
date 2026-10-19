@@ -37,6 +37,15 @@
 
 6. A função `uploadImage` (frontend) recebe a resposta da API, converte o corpo da resposta para JSON e retorna a URL da imagem hospedada no `Cloudinary`
 
-7. A função `createPiece` recebe a URL da imagem retornada por `uploadImage` e, em seguida, envia os dados da peça para a rota `POST /pieces`
+7. A função `createPiece` recebe a URL da imagem retornada por `uploadImage` e, em seguida, envia os dados da peça para a rota `POST /pieces`. Após o cadastro `onSuccess` executa `loadPieces`, que atualiza o estado das peças no componente `Admin`, fazendo com que ele seja re-renderizado.
 
 8. O controller `createPiece` envia os dados recebidos para o banco de dados por meio do `pool` de conexões
+
+# Fluxo de sugestão da searchBar
+
+1. Quando o usuário digita no input da `searchBar`, o onChange atualiza o estado searchedInput, define showSuggestions como true e redefine clickedPiece para null.
+2. Quando o componente é renderizado novamente (através do `onChange`), a condição de exibição das sugestões é avaliada. Se as sugestões estiverem habilitadas, o map percorre o array correspondente e renderiza cada peça em uma div.
+
+3. Quando o usuário clica em uma sugestão, o `onClick` atualiza `clickedPiece` com o objeto da peça selecionada, define `searchedInput` com o nome da peça e altera `showSuggestions` para `false`, ocultando as sugestões.
+4. O valor de `clickedPiece` determina os dados utilizados na exibição: se houver uma peça selecionada, `arrayToBeUsed` contém somente essa peça; caso contrário, contém o array completo de peças recebido do backend.
+

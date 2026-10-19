@@ -35,7 +35,6 @@ export default function Admin() {
         const response = await getPieces();
          // Transformo os dados recebidos da API em um array
             const piecesData = response.data;
-            console.log(piecesData); 
             setTotalPieces(piecesData.length);
             piecesData.map((piece: Piece) => {
                 if (piece.availability_status === "available") {
@@ -290,7 +289,7 @@ export default function Admin() {
                                     </div>
 
                                     <span className="status available">
-                                        {piece.availability_status}
+                                        {piece.availability_status == "available" ? "Disponível" : "Sob encomenda"}
                                     </span>
 
                                 </div>
@@ -409,7 +408,7 @@ export default function Admin() {
                                     <td>
 
                                         <span className="status available">
-                                            {piece.availability_status}
+                                        {piece.availability_status == "available" ? "Disponível" : "Sob encomenda"}
                                         </span>
                                     </td>
                                     <td>
