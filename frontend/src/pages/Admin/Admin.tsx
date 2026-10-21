@@ -44,7 +44,7 @@ export default function Admin() {
                 }
             })
             setPieces(piecesData);
-    }
+    };
     useEffect(() => {
         loadPieces();
     }, []) 

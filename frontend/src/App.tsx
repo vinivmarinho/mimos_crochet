@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Admin from './pages/Admin/Admin';
 import AdminRoute from './components/AdminRoute';
+import CatalogPage from './pages/CatalogPage/Catalog';
 function App() {
 
   return (
@@ -34,6 +35,15 @@ function App() {
 
             </AdminRoute>
             }>
+        </Route>
+
+        <Route
+        path="/catalog"
+        element={
+          <CatalogPage />
+        }
+        >
+          
         </Route>
       </Routes>
       <ToastContainer />
