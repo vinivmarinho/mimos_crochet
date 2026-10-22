@@ -39,7 +39,7 @@ export default function Admin() {
             piecesData.map((piece: Piece) => {
                 if (piece.availability_status === "available") {
                     setAvailablePieces(availablePieces + 1);
-                } else if (piece.availability_status === "made to order") {
+                } else if (piece.availability_status === "made_to_order") {
                     setMadeToOrderPieces(madeToOrderPieces + 1);
                 }
             })
@@ -257,7 +257,7 @@ export default function Admin() {
                                 <option value="available">
                                     Disponíveis
                                 </option>
-                                <option value="made-to-order">
+                                <option value="made_to_order">
                                     Sob encomenda
                                 </option>
                             </select>

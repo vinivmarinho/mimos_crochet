@@ -6,6 +6,6 @@ export type Piece = {
     width: number;
     height: number;
     color: string;
-    availability_status: "available" | "made to order"
+    availability_status: "available" | "made_to_order"
     image_url: string
 };

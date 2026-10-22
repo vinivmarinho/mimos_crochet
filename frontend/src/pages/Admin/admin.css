@@ -722,7 +722,7 @@
     border: 1px solid #dfcfe0;
 }
 
-.status.made-to-order {
+.status.made_to_order {
     background-color: var(--order-bg);
 
     color: var(--order-text);
