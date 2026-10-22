@@ -12,7 +12,7 @@ async function createPiece(req: Request, res: Response) {
         })
     } catch(error) {
         return res.status(400).json({
-            message: `Não foi possível cadastrar a peça: ${req.body.name}. Erro: ${error}. Caiu no erro do controller`
+            message: `Não foi possível cadastrar a peça: ${req.body.name}. Erro: ${error}`
         })
     }
 };
@@ -32,4 +32,18 @@ async function getPieces(req: Request, res: Response) {
     }
 }
 
-export { createPiece, getPieces };
+
+async function deletePiece(req: Request, res: Response) {
+    try {
+        const { pieceId } = req.params;
+        await pool.query("DELETE FROM pieces WHERE piece_id = $1", [pieceId])
+        return res.status(200).json({
+            message: "Peça deletada com sucesso!"
+        })
+    } catch(error) {
+        return res.status(400).json({
+            message: `Não foi possível deletar essa peça!, ${error}`
+        })
+    }
+}
+export { createPiece, getPieces, deletePiece };
