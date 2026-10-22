@@ -27,6 +27,8 @@ export default function CatalogPage() {
 
   const [pieces, setPieces] = useState<Piece[]>([]);
 
+  // Imagem
+  const [selectedImage, setSelectedImage] = useState("");
 
   // ===========================================
   // Data fetching
@@ -179,6 +181,8 @@ export default function CatalogPage() {
                   <img
                     src={piece.image_url}
                     alt={piece.name}
+                    className="piece-image"
+                    onClick={() => setSelectedImage(piece.image_url)}
                   />
                   <span
                     className={`availability ${piece.availability_status === "available" ? "available": "made_to_order"}`}
@@ -214,6 +218,28 @@ export default function CatalogPage() {
           </div>
         )}
       </section>
+
+        
+      {/* ===========================================
+          Modal da imagem selecionada
+          ===========================================
+      */}
+      {selectedImage && (
+          <div
+              className="image-modal"
+              onClick={() => setSelectedImage("")}
+          >
+              <button
+              className="close-modal"
+              onClick={() => setSelectedImage("")}
+              >X</button>
+
+              <img src={selectedImage} alt="Imagem ampliada" className="enlarged-image"
+              onClick={(event) => event.stopPropagation()}
+              />
+          </div>
+      )}
+
 
 
       {/* ===========================================
