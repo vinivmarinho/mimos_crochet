@@ -51,3 +51,18 @@ export async function getPieces() {
         return false;
     }
 };
+
+export async function deletePiece(pieceId : number) {
+    const response = await fetch(`${import.meta.env.VITE_RENDER_API}/pieces/${pieceId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Não foi possível excluir a peça");
+    }
+
+    return response.json();
+} 

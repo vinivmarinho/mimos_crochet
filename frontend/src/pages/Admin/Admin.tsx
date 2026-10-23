@@ -1,9 +1,10 @@
 import "./admin.css";
 import "../pages.css";
 import PieceForm from "../../components/PieceForm/PieceForm";
-import { getPieces } from "../../services/pieceService";
+import { getPieces, deletePiece } from "../../services/pieceService";
 import { useState, useEffect } from "react";
 import { type Piece } from "../../types/Piece";
+import { toast } from "react-toastify";
 export default function Admin() {
     // ===========================================
     // Estados
@@ -16,7 +17,7 @@ export default function Admin() {
     const [totalPieces, setTotalPieces] = useState(0);
     const [availablePieces, setAvailablePieces] = useState(0);
     const [madeToOrderPieces, setMadeToOrderPieces] = useState(0);
-    
+
     // Formulário
     const [showForm, setShowForm] = useState(false);
     // Filtro de status
@@ -26,28 +27,51 @@ export default function Admin() {
     const [showSuggestions, setShowSuggestions] = useState(false);
     // Imagem 
     const [selectedImage, setSelectedImage] = useState("");
-    
+    // Peça para remover
+    const [pieceToDelete, setPieceToDelete] = useState<Piece | null>(null);
+
 
     // ===========================================
     // Data fetching
     // ===========================================
+
     async function loadPieces() {
         const response = await getPieces();
-         // Transformo os dados recebidos da API em um array
-            const piecesData = response.data;
-            setTotalPieces(piecesData.length);
-            piecesData.map((piece: Piece) => {
-                if (piece.availability_status === "available") {
-                    setAvailablePieces(availablePieces + 1);
-                } else if (piece.availability_status === "made_to_order") {
-                    setMadeToOrderPieces(madeToOrderPieces + 1);
-                }
-            })
-            setPieces(piecesData);
+        // Transformo os dados recebidos da API em um array
+        const piecesData = response.data;
+        setTotalPieces(piecesData.length);
+        piecesData.map((piece: Piece) => {
+            if (piece.availability_status === "available") {
+                setAvailablePieces(availablePieces + 1);
+            } else if (piece.availability_status === "made_to_order") {
+                setMadeToOrderPieces(madeToOrderPieces + 1);
+            }
+        })
+        setPieces(piecesData);
     };
     useEffect(() => {
         loadPieces();
-    }, []) 
+    }, [])
+
+
+
+    // ===========================================
+    // Chamada do serviço de remoção de peça
+    // ===========================================
+    async function handleDeletePiece(pieceToDelete: Piece) {
+        try {
+            await deletePiece(pieceToDelete.piece_id);
+            await loadPieces();
+            setPieceToDelete(null);
+            toast.success("Peça removida com sucesso", {
+                 className: "toast success-toast"
+            });
+        } catch(error) {
+            toast.error("Não foi possível cadastrar a peça", {
+            className: "toast error-toast"
+            })
+        }
+    }
 
     // ===========================================
     // Lógica da barra de pesquisa
@@ -61,7 +85,7 @@ export default function Admin() {
 
         return matchesName && matchesStatus;
     })
-    
+
 
     // ===========================================
     // Renderização
@@ -191,15 +215,12 @@ export default function Admin() {
                 <section className="pieces-section">
 
                     <div className="section-header">
-
                         <div>
                             <h3>Peças</h3>
-
                             <p>
                                 Gerencie as peças cadastradas.
                             </p>
                         </div>
-
                         <button className="add-piece-button" onClick={() => setShowForm(true)}>
                             + Adicionar peça
                         </button>
@@ -213,7 +234,6 @@ export default function Admin() {
                     */}
 
                     <div className="pieces-toolbar">
-
                         <div className="search-bar-div">
                             <button className="search-icon">🔍</button>
                             <input
@@ -226,30 +246,32 @@ export default function Admin() {
                                     setShowSuggestions(true);
                                 }}
                             />
-                            <button className="x-icon" onClick={() => { 
-                                setSearchedInput("")}}>
-                                    ❌
+                            <button className="x-icon" onClick={() => {
+                                setSearchedInput("")
+                            }}>
+                                ❌
                             </button>
                             {showSuggestions && searchedInput.length > 0 && (
                                 <div className="search-suggestions">
                                     {filteredPieces.length > 0 ? (
                                         filteredPieces.map((piece) => (
                                             <div key={piece.piece_id} onClick={() => {
-                                                setSearchedInput(piece.name); 
-                                                setShowSuggestions(false)}}>
+                                                setSearchedInput(piece.name);
+                                                setShowSuggestions(false)
+                                            }}>
                                                 {piece.name}
                                             </div>
                                         ))
-                                    ): <p>Nenhuma peça encontrada</p>}
+                                    ) : <p>Nenhuma peça encontrada</p>}
                                 </div>
                             )}
                         </div>
-                        
+
                         <div className="filter-div">
-                            <select 
-                            className="filter-select"
-                            value={selectedStatus}
-                            onChange={(event) => setSelectedStatus(event.target.value)}
+                            <select
+                                className="filter-select"
+                                value={selectedStatus}
+                                onChange={(event) => setSelectedStatus(event.target.value)}
                             >
                                 <option value="all">
                                     Todos
@@ -264,7 +286,7 @@ export default function Admin() {
                         </div>
                     </div>
 
-                    
+
 
                     {/* ===========================================
                         Mobile - Cards
@@ -272,9 +294,9 @@ export default function Admin() {
                     */}
 
                     <div className="pieces-cards">
-                        
+
                         {filteredPieces.map((piece) => (
-                            
+
                             <article className="piece-card" key={piece.piece_id}>
 
                                 <div className="piece-card-header">
@@ -283,7 +305,7 @@ export default function Admin() {
 
                                         <div className="piece-image-container">
                                             <img className="piece-image" src={piece.image_url} alt="Imagem" onClick={() => setSelectedImage(piece.image_url)} />
-                                            
+
                                         </div>
 
                                         <div className="piece-name">
@@ -346,18 +368,18 @@ export default function Admin() {
                                         Editar
                                     </button>
 
-                                    <button>
+                                    <button onClick={() => setPieceToDelete(piece)}>
                                         Excluir
                                     </button>
 
                                 </div>
 
                             </article>
-                            ))}
-                            
+                        ))}
+
                     </div>
-                    
-                   
+
+
 
                     {/* ===========================================
                         Desktop - Table
@@ -366,7 +388,7 @@ export default function Admin() {
 
                     <div className="table-container">
                         <table className="pieces-table">
-                           
+
                             <thead>
                                 <tr>
                                     <th>
@@ -393,43 +415,44 @@ export default function Admin() {
                             <tbody>
                                 {filteredPieces.map((piece) => (
                                     <tr>
-                                    <td>
-                                        <div className="piece-info">
-                                            <div className="piece-image-container">
-                                                <img className="piece-image" src={piece.image_url} alt="Imagem" onClick={() => setSelectedImage(piece.image_url)} />
+                                        <td>
+                                            <div className="piece-info">
+                                                <div className="piece-image-container">
+                                                    <img className="piece-image" src={piece.image_url} alt="Imagem" onClick={() => setSelectedImage(piece.image_url)} />
+                                                </div>
+                                                <span>
+                                                    {piece.name}
+                                                </span>
                                             </div>
-                                            <span>
-                                                {piece.name}
+                                        </td>
+                                        <td>
+                                            R$ {piece.price}
+                                        </td>
+                                        <td>
+                                            {piece.weight} g
+                                        </td>
+                                        <td>
+
+                                            <span className="status available">
+                                                {piece.availability_status == "available" ? "Disponível" : "Sob encomenda"}
                                             </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        R$ {piece.price}
-                                    </td>
-                                    <td>
-                                        {piece.weight} g
-                                    </td>
-                                    <td>
+                                        </td>
+                                        <td>
+                                            {piece.width} × {piece.height} cm
+                                        </td>
+                                        <td>
+                                            <div className="table-actions">
+                                                <button>
+                                                    Editar
+                                                </button>
 
-                                        <span className="status available">
-                                        {piece.availability_status == "available" ? "Disponível" : "Sob encomenda"}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {piece.width} × {piece.height} cm
-                                    </td>
-                                    <td>
-                                        <div className="table-actions">
-                                            <button>
-                                                Editar
-                                            </button>
-
-                                            <button>
-                                                Excluir
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                <button onClick={() => setPieceToDelete(piece
+                                                )}>
+                                                    Excluir
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 ))}
                             </tbody>
                         </table>
@@ -443,26 +466,76 @@ export default function Admin() {
                 {showForm && (
                     <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} />
                 )}
-                
+
                 {/* ===========================================
                     Renderização do Modal
                     ===========================================
                 */}
-                 {selectedImage && (
-                        <div
-                            className="image-modal"
-                            onClick={() => setSelectedImage("")}
-                        >
-                            <button
+                {selectedImage && (
+                    <div
+                        className="image-modal"
+                        onClick={() => setSelectedImage("")}
+                    >
+                        <button
                             className="close-modal"
                             onClick={() => setSelectedImage("")}
-                            >X</button>
+                        >X</button>
 
-                            <img src={selectedImage} alt="Imagem ampliada" className="enlarged-image"
+                        <img src={selectedImage} alt="Imagem ampliada" className="enlarged-image"
                             onClick={(event) => event.stopPropagation()}
-                            />
+                        />
+                    </div>
+                )}
+
+
+                {/* ===========================================
+                    Renderização do Modal para remover uma peça
+                    ===========================================
+                */}
+                {pieceToDelete && (
+                    <div
+                        className="delete-modal-backdrop"
+                        onClick={() => setPieceToDelete(null)}
+                    >
+                        <div
+                            className="delete-modal"
+                            onClick={(event) => event.stopPropagation()}
+                        >
+                            <button
+                                className="close-modal"
+                                onClick={() => setPieceToDelete(null)}
+                            >
+                                X
+                            </button>
+
+                            <div className="delete-modal-icon">
+                                !
+                            </div>
+
+                            <h3>Excluir peça?</h3>
+                            <p>
+                                Você está prestes a remover <strong>{pieceToDelete.name}</strong> do catálogo.
+                                Essa ação não pode ser desfeita.
+                            </p>
+
+                            <div className="delete-modal-actions">
+                                <button
+                                    className="cancel-delete-button"
+                                    onClick={() => setPieceToDelete(null)}
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    className="confirm-delete-button"
+                                    onClick={() => handleDeletePiece(pieceToDelete)}
+                                >
+                                    Excluir
+                                </button>
+                            </div>
                         </div>
-                    )}
+                    </div>
+                )}
             </main>
         </div>
     );
