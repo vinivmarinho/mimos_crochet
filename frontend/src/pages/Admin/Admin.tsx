@@ -366,7 +366,10 @@ export default function Admin() {
 
                                 <div className="piece-card-actions">
 
-                                    <button>
+                                    <button onClick={() => {
+                                        setPieceToUpdate(piece);
+                                        setShowForm(true);
+                                    }}>
                                         Editar
                                     </button>
 
