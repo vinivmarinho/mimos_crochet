@@ -27,9 +27,9 @@ export default function Admin() {
     const [showSuggestions, setShowSuggestions] = useState(false);
     // Imagem 
     const [selectedImage, setSelectedImage] = useState("");
-    // Peça para remover
+    // Peças para remover e editar
     const [pieceToDelete, setPieceToDelete] = useState<Piece | null>(null);
-
+    const [pieceToUpdate, setPieceToUpdate] = useState<Piece | null>(null);
 
     // ===========================================
     // Data fetching
@@ -414,7 +414,7 @@ export default function Admin() {
 
                             <tbody>
                                 {filteredPieces.map((piece) => (
-                                    <tr>
+                                    <tr key={piece.piece_id}>
                                         <td>
                                             <div className="piece-info">
                                                 <div className="piece-image-container">
@@ -442,7 +442,10 @@ export default function Admin() {
                                         </td>
                                         <td>
                                             <div className="table-actions">
-                                                <button>
+                                                <button onClick={() => {
+                                                    setPieceToUpdate(piece);
+                                                    setShowForm(true);
+                                                }}>
                                                     Editar
                                                 </button>
 
@@ -464,9 +467,10 @@ export default function Admin() {
                     ===========================================
                 */}
                 {showForm && (
-                    <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} />
+                    <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} pieceToUpdate={pieceToUpdate}  setPieceToUpdate={setPieceToUpdate}/>
                 )}
 
+                
                 {/* ===========================================
                     Renderização do Modal
                     ===========================================

@@ -1,13 +1,16 @@
-import { createPiece } from "../../services/pieceService";
+import { createPiece, updatePiece } from "../../services/pieceService";
+import type { Piece } from "../../types/Piece";
 import "./pieceForm.css";
 import { toast } from "react-toastify";
 
 type PieceFormProps = {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   onSuccess: () => Promise<void>;
+  pieceToUpdate?: Piece | null;
+  setPieceToUpdate: React.Dispatch<React.SetStateAction<Piece | null>>;
 };
 
-function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
+function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: PieceFormProps) {
   
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -15,15 +18,24 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
     const formData = new FormData(event.currentTarget);
 
     try {
-      await createPiece(formData);
-      toast.success("Peça cadastrada com sucesso", {
-        className: "toast success-toast"
-      });
+      if (pieceToUpdate) {
+        await updatePiece(pieceToUpdate.piece_id, formData)
+        toast.success("Peça editada com sucesso", {
+            className: "toast success-toast"
+          });
+
+      } else {
+          await createPiece(formData);
+          toast.success("Peça cadastrada com sucesso", {
+            className: "toast success-toast"
+          });
+      }
+      
       // Aguarda o carregamento das peças no componente "Admin"
       await onSuccess();
 
     } catch(error) {
-      toast.error("Não foi possível cadastrar a peça", {
+      toast.error("Não foi possível realizar a ação peça", {
         className: "toast error-toast"
       })
     } finally {
@@ -36,7 +48,10 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
       // Se usuário clicar no overlay (fora do form), muda o estado que controla a aparição do formulário
       onClick={(event) => {
         if (event.target === event.currentTarget) {
-          setShowForm(false)
+          setShowForm(false);
+          if (pieceToUpdate) {
+            setPieceToUpdate(null)
+          }
         }
       }}
     >
@@ -45,17 +60,21 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
         <button
           type="button"
           className="piece-form-close"
-          onClick={() => setShowForm(false)}
+          onClick={() => {
+            setShowForm(false);
+            setPieceToUpdate(null);
+          }}
         > X
         </button>
 
-        <h2>Cadastrar peça</h2>
+        <h2>{pieceToUpdate == null ? "Cadastrar Peça" : "Editar Peça"}</h2>
 
         <label htmlFor="name">Nome</label>
         <input
           type="text"
           id="name"
           name="name"
+          defaultValue={pieceToUpdate?.name ?? ""}
           placeholder="Nome da peça"
           required
         />
@@ -65,6 +84,7 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
           type="number"
           id="price"
           name="price"
+          defaultValue={pieceToUpdate?.price ?? ""}
           placeholder="Preço"
           required
         />
@@ -74,6 +94,7 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
           type="number"
           id="weight"
           name="weight"
+          defaultValue={pieceToUpdate?.weight ?? ""}
           placeholder="Peso da peça"
           required
         />
@@ -83,6 +104,7 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
           type="number"
           id="width"
           name="width"
+          defaultValue={pieceToUpdate?.width?? ""}
           placeholder="Largura"
           required
         />
@@ -92,6 +114,7 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
           type="number"
           id="height"
           name="height"
+          defaultValue={pieceToUpdate?.height ?? ""}
           placeholder="Altura"
           required
         />
@@ -101,6 +124,7 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
           type="text"
           id="color"
           name="color"
+          defaultValue={pieceToUpdate?.color ?? ""}
           placeholder="Cor da peça"
           required
         />
@@ -109,6 +133,7 @@ function PieceForm({ setShowForm, onSuccess }: PieceFormProps) {
         <select
           id="availabilityStatus"
           name="availabilityStatus"
+          defaultValue={pieceToUpdate?.availability_status ?? ""}
           required
         >
           <option value="available">Pronta entrega</option>
