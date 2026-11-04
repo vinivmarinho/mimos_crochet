@@ -107,7 +107,7 @@ function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: 
           type="number"
           id="weight"
           name="weight"
-          defaultValue={pieceToUpdate?.weight ?? ""}
+          defaultValue={Number(pieceToUpdate?.weight).toFixed(0) ?? ""}
           placeholder="Peso da peça"
           required
         />
@@ -117,7 +117,7 @@ function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: 
           type="number"
           id="width"
           name="width"
-          defaultValue={pieceToUpdate?.width?? ""}
+          defaultValue={Number(pieceToUpdate?.width).toFixed(0)?? ""}
           placeholder="Largura"
           required
         />
@@ -127,7 +127,7 @@ function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: 
           type="number"
           id="height"
           name="height"
-          defaultValue={pieceToUpdate?.height ?? ""}
+          defaultValue={Number(pieceToUpdate?.height).toFixed(0) ?? ""}
           placeholder="Altura"
           required
         />
@@ -159,7 +159,7 @@ function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: 
           id="image"
           name="image"
           accept="image/*"
-        />
+        />  
 
         <button type="submit" className="submit-button" disabled={isRequesting}>
           {isRequesting ? "Cadastrando" : "Cadastrar peça"}

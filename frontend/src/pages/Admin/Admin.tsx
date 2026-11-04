@@ -358,7 +358,7 @@ export default function Admin() {
                                         </span>
 
                                         <strong>
-                                            {piece.width} × {Number(piece.height).toFixed(0)} cm
+                                            {Number(piece.width).toFixed(0)} × {Number(piece.height).toFixed(0)} cm
                                         </strong>
                                     </div>
                                 </div>
@@ -434,7 +434,7 @@ export default function Admin() {
                                             R$ {piece.price}
                                         </td>
                                         <td>
-                                            {piece.weight} g
+                                            {Number(piece.weight).toFixed()} g
                                         </td>
                                         <td>
 
@@ -443,7 +443,7 @@ export default function Admin() {
                                             </span>
                                         </td>
                                         <td>
-                                            {piece.width} × {piece.height} cm
+                                            {Number(piece.width).toFixed(0)} × {Number(piece.height).toFixed(0)} cm
                                         </td>
                                         <td>
                                             <div className="table-actions">
