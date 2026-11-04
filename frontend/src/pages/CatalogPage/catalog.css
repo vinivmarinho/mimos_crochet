@@ -62,7 +62,19 @@ input {
   background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--border-color);
 }
+.catalog-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 
+.catalog-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
 .catalog-logo {
   display: inline-flex;
   align-items: center;
@@ -137,10 +149,26 @@ input {
 .catalog-nav .contact-link {
   background: var(--plum-dark);
   color: #ffffff;
-  box-shadow: 0 10px 22px rgba(99, 54, 83, 0.18);
   margin-left: 10px;
 }
 
+.admin-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #633653;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.admin-link:hover {
+  background-color: #633653;
+  color: #fff;
+}
 /*  ===========================================
     Seção de Introdução
     ===========================================
@@ -532,8 +560,10 @@ input {
   .catalog-nav a:not(.contact-link) {
     display: inline-flex;
   }
-
-
+  
+  .admin-link {
+    white-space: nowrap;
+  }
   /*  ===========================================
       Seção de Introdução
       ===========================================

@@ -5,6 +5,8 @@ import { getPieces, deletePiece } from "../../services/pieceService";
 import { useState, useEffect } from "react";
 import { type Piece } from "../../types/Piece";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+
 export default function Admin() {
     // ===========================================
     // Estados
@@ -104,10 +106,10 @@ export default function Admin() {
                     <a href="#" className="nav-item active">
                         Dashboard
                     </a>
-
-                    <a href="#" className="nav-item">
+                    
+                    <Link to="/catalog" className="nav-item">
                         Peças
-                    </a>
+                    </Link>
 
                     <a href="#" className="nav-item">
                         Pedidos

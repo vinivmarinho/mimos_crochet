@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./catalog.css";
 import { type Piece } from "../../types/Piece.ts";
 import { getPieces } from "../../services/pieceService.ts";
-
+import { Link } from "react-router-dom";
 // ===========================================
 // Types
 // ===========================================
@@ -88,6 +88,10 @@ export default function CatalogPage() {
             Fale conosco
           </a>
         </nav>
+
+        <Link to="/admin" className="admin-link">
+          Área administrativa
+        </Link>
       </header>
 
 
