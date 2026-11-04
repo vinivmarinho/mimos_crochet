@@ -7,11 +7,12 @@ export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
+    const [isRequesting, setIsRequesting] = useState(false);
     async function handleSubmit(event: React.SubmitEvent) {
         event.preventDefault();
-
+        if (isRequesting) return;
         try {
+            setIsRequesting(true);
             const response = await fetch(
                 `${import.meta.env.VITE_RENDER_API}/users/login`,
                 {
@@ -45,6 +46,8 @@ export default function LoginForm() {
             toast.error("Não foi possível realizar o login", {
                 className: "toast error-toast"
             });
+        } finally {
+            setIsRequesting(false);
         }
     }
 
@@ -76,8 +79,8 @@ export default function LoginForm() {
                 onChange={(event) => setPassword(event.target.value)}
             />
 
-            <button type="submit">
-                Entrar
+            <button type="submit" disabled={isRequesting}>
+                {isRequesting ? "Entrando..." : "Entrar"}
             </button>
         </form>
     );

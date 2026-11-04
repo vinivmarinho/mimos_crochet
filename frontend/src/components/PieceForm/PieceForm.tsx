@@ -2,6 +2,7 @@ import { createPiece, updatePiece } from "../../services/pieceService";
 import type { Piece } from "../../types/Piece";
 import "./pieceForm.css";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 type PieceFormProps = {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,21 +11,32 @@ type PieceFormProps = {
   setPieceToUpdate: React.Dispatch<React.SetStateAction<Piece | null>>;
 };
 
+
 function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: PieceFormProps) {
-  
+  // ===========================================
+  // Estados
+  // ===========================================
+
+  // Verifica se está acontecendo alguma requisição ao backend
+  const [isRequesting, setIsRequesting] = useState(false);
+
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
+    if (isRequesting) return;
+    
     try {
       if (pieceToUpdate) {
+        setIsRequesting(true);
         await updatePiece(pieceToUpdate.piece_id, formData)
         toast.success("Peça editada com sucesso", {
             className: "toast success-toast"
           });
 
       } else {
+          setIsRequesting(true);
           await createPiece(formData);
           toast.success("Peça cadastrada com sucesso", {
             className: "toast success-toast"
@@ -40,6 +52,7 @@ function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: 
       })
     } finally {
       setShowForm(false);
+      setIsRequesting(false);
     }
   }
   return (
@@ -148,8 +161,8 @@ function PieceForm({ setShowForm, onSuccess, pieceToUpdate, setPieceToUpdate }: 
           accept="image/*"
         />
 
-        <button type="submit" className="submit-button">
-          Cadastrar peça
+        <button type="submit" className="submit-button" disabled={isRequesting}>
+          {isRequesting ? "Cadastrando" : "Cadastrar peça"}
         </button>
       </form>
     </div>
