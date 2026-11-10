@@ -5,9 +5,9 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post("/", authenticateToken, isAdmin, createPiece);
+router.post("/",createPiece);
 router.get("/", getPieces);
-router.delete("/:pieceId", authenticateToken, isAdmin, deletePiece);
-router.patch("/:pieceId", authenticateToken, isAdmin, updatePiece);
+router.delete("/:pieceId", deletePiece);
+router.patch("/:pieceId", updatePiece);
 
 export default router;
