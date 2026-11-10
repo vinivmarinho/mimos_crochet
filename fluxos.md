@@ -4,7 +4,7 @@
 
 2. O `LoginForm` envia os dados para a API (`/users/login`).
 
-3. O controller de login recebe o email e a senha, verifica se o usuário existe e compara a senha informada com o `password_hash` armazenado no banco.
+3. O controller de login recebe o email e a senha, verifica se o usuário existe no banco de dados e compara a senha informada com o `password_hash` armazenado no banco.
 
 4. Se as credenciais forem válidas, o backend gera um JWT e envia esse token em um cookie chamado `access_token`. O navegador armazena o cookie e poderá enviá-lo automaticamente em requisições futuras, quando as regras de cookies/CORS permitirem.
 

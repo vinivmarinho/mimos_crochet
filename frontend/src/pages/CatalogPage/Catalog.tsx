@@ -198,7 +198,7 @@ export default function CatalogPage() {
                 </div>
 
                 <div className="piece-info">
-                  <h3>{piece.name}</h3>
+                  <h3>{piece.name} ({Number(piece.height).toFixed(0)} x {Number(piece.width).toFixed(0)})</h3>
                   <strong>{Number(piece.price).toFixed(2)}</strong>
                 </div>
               </article>
