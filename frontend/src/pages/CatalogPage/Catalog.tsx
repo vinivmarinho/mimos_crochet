@@ -84,7 +84,13 @@ export default function CatalogPage() {
           <a href="#inicio">Início</a>
           <a href="#pecas">Peças</a>
           <a href="#sobre">Sobre</a>
-          <a className="contact-link" href="#"> {/* TODO: Add link do wpp*/}
+          <a 
+          className="contact-link" 
+          href={`https://wa.me/559293400579?text=${encodeURIComponent(
+            "Olá! Gostaria de saber mais sobre seus produtos"
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer" > {/* TODO: Add link do wpp*/}
             Fale conosco
           </a>
         </nav>
