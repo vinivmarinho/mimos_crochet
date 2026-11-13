@@ -1,5 +1,6 @@
 import { type Request, type Response } from "express";
 import pool from "../config/database.js";
+import { deleteImage } from "./image.controller.js";
 
 async function createPiece(req: Request, res: Response) {
     try {
@@ -36,6 +37,17 @@ async function getPieces(req: Request, res: Response) {
 async function deletePiece(req: Request, res: Response) {
     try {
         const { pieceId } = req.params;
+        // Buscar peça com base no id
+        const piece = await pool.query(`SELECT * FROM pieces WHERE piece_id = $1`, [pieceId]);
+        if (piece.rows.length === 0) {
+            return res.status(404).json({
+                message: "Peça não encontrada"
+            });
+        }
+        
+        // Remove imagem do Cloudinary
+        await deleteImage(piece.rows[0].image_url)
+        // Remove imagem do banco
         await pool.query("DELETE FROM pieces WHERE piece_id = $1", [pieceId])
         return res.status(200).json({
             message: "Peça deletada com sucesso!"

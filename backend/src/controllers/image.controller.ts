@@ -46,4 +46,12 @@ async function uploadImage(req: Request, res: Response) {
     }
 }
 
-export { uploadImage };
+async function deleteImage(publicId: string) {
+    try {
+        const result = await cloudinary.uploader.destroy(publicId);
+        return result;
+    } catch(error) {
+        return error;
+    }
+}
+export { uploadImage, deleteImage };
