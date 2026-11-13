@@ -18,6 +18,7 @@ export async function createPiece(formData: FormData) {
     try {
         const response = await fetch(`${import.meta.env.VITE_RENDER_API}/pieces` , {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -55,6 +56,7 @@ export async function getPieces() {
 export async function deletePiece(pieceId : number) {
     const response = await fetch(`${import.meta.env.VITE_RENDER_API}/pieces/${pieceId}`, {
         method: "DELETE",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json"
         }
@@ -85,6 +87,7 @@ export async function updatePiece(pieceId: number, formData: FormData) {
 
     const response = await fetch(`${import.meta.env.VITE_RENDER_API}/pieces/${pieceId}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json"
         },

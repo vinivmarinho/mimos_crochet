@@ -3,8 +3,10 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 function authenticateToken(req: Request, res: Response, next: NextFunction) {
-    const token = req.cookies.access_token; // Busca token que está guardado no navegador através de um cookie
     
+    const token = req.cookies?.access_token; // Busca token que está guardado no navegador através de um cookie
+    
+
     // Se token não existir, usuário não está autenticado
     if (!token) {
         return res.status(401).json({
