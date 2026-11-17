@@ -27,7 +27,7 @@ async function getPieces(req: Request, res: Response) {
             data: data
         });
     } catch(error) {
-        return res.status(400).json({
+        return res.status(500).json({
             message: "Não foi possível encontrar as peças"
         })
     }

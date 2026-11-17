@@ -4,6 +4,7 @@ import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import imageRoutes from "./routes/image.routes.js";
 import pieceRoutes from "./routes/piece.route.js";
+import orderRoutes from "./routes/order.routes.js";
 
 import cookieParser from "cookie-parser";
 const app = express();
@@ -44,4 +45,5 @@ app.get("/teste", (req: Request, res: Response) => {
 app.use("/users", userRoutes);
 app.use("/images", imageRoutes);
 app.use("/pieces", pieceRoutes);
+app.use("/orders", orderRoutes);
 export default app;
