@@ -1,0 +1,342 @@
+/*  ==========================================
+    Orders-section
+    ========================================== 
+*/
+.orders-section {
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--card-bg);
+    box-shadow: 0 6px 24px rgba(191, 137, 182, .12);
+}
+
+/*  ==========================================
+    Toolbar
+    ========================================== 
+*/
+
+.orders-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.stat-value-small {
+    font-size: 1.25rem !important;
+}
+
+/*  ==========================================
+    Orders-cards
+    ========================================== 
+*/
+
+
+.orders-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.order-card {
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 5px 18px rgba(191, 137, 182, .12);
+}
+
+/* Card Header */
+
+.order-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px;
+    background: var(--pink-soft);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.order-card-header h4 {
+    margin: 5px 0 0;
+    color: var(--plum-dark);
+    font-size: 1rem;
+}
+
+.order-number {
+    color: var(--text-light);
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+/* Order Status */
+
+.order-status {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: .72rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-in_production {
+    background: var(--order-bg);
+    color: var(--order-text);
+    border: 1px solid #eccbdc;
+}
+
+.status-ready {
+    background: var(--lilac-light);
+    color: var(--plum-dark);
+    border: 1px solid #dfcfe0;
+}
+
+.status-delivered {
+    background: var(--available-bg);
+    color: var(--available-text);
+    border: 1px solid #dfcfe0;
+}
+
+/* Product Information */
+
+.order-product {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px 8px;
+    color: var(--plum-dark);
+    font-weight: 700;
+}
+
+.order-product small {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+/* Card Details */
+
+.order-card-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 8px 16px 16px;
+}
+
+.order-card-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #faf7f9;
+}
+
+.order-card-details span {
+    color: var(--lilac-lace);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.order-card-details strong {
+    color: var(--text-color);
+    font-size: .88rem;
+}
+
+/* Card Actions */
+
+.order-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 16px 16px;
+}
+
+.order-card-actions button {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--plum-dark);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.order-card-actions button:last-child {
+    color: var(--order-text);
+    background: var(--order-bg);
+}
+
+/* Empty State */
+
+.empty-orders {
+    padding: 32px 16px;
+    text-align: center;
+    color: var(--text-light);
+}
+
+/*  ==========================================
+    Orders-Table
+    ========================================== 
+*/
+
+.table-container {
+    display: none;
+}
+.orders-table td small {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-light);
+}
+
+.orders-table .table-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.orders-table .table-actions button {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 7px 9px;
+    background: #fff;
+    color: var(--plum-dark);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/*  ==========================================
+    Order do Modal
+    ========================================== 
+*/
+
+
+.order-form-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(74, 59, 70, .55);
+    backdrop-filter: blur(4px);
+}
+
+.order-form {
+    position: relative;
+    width: min(680px, 100%);
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 26px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--card-bg);
+    box-shadow: 0 18px 45px rgba(99, 54, 83, .25);
+}
+
+.order-form h2 {
+    margin: 0 0 20px;
+    color: var(--plum-dark);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: normal;
+}
+
+.order-form-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: 0;
+    background: transparent;
+    color: var(--plum-dark);
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Form Grid */
+
+.order-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+/* Form Fields */
+
+.order-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--plum-dark);
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.order-form input,
+.order-form select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--text-color);
+    font-family: inherit;
+}
+
+/* Submit Button */
+
+.order-form .submit-button {
+    width: 100%;
+    margin-top: 18px;
+
+    background-color: var(--pink-yarn);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    padding: 10px;
+}
+
+/*  ==========================================
+    Versão Tablet
+    ========================================== 
+*/
+
+@media (min-width: 768px) {
+    .orders-toolbar {
+        flex-direction: row;
+    }
+    
+    .orders-toolbar .search-bar-div {
+        flex: 1;
+    }
+
+    .orders-toolbar .filter-select {
+        width: 220px;
+    }
+
+    .order-form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/*  ==========================================
+    Versão Desktop
+    ========================================== 
+*/
+@media (min-width: 1024px) {
+    .orders-section {
+        padding: 28px;
+        border-radius: 24px;
+    }
+
+    .orders-cards {
+        display: none;
+    }
+    .table-container {
+        display: block;
+    }
+}
