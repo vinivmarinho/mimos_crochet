@@ -2,48 +2,58 @@ import './App.css'
 // BrowserRouter => Componente que habilita o sistema de rotas na aplicação*
 // Routes => É como um container que guarda as rotas
 // Route => Representa uma rota específica
-import { BrowserRouter, Routes, Route } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Admin from './pages/Admin/Admin';
 import AdminRoute from './components/AdminRoute';
 import CatalogPage from './pages/CatalogPage/Catalog';
+import Orders from './pages/Orders/Orders';
 function App() {
 
   return (
-    <BrowserRouter> 
+    <BrowserRouter>
       <Routes>
 
-        <Route 
-          path="/cadastro" 
+        <Route
+          path="/cadastro"
           element={<Register />}>
         </Route>
 
-        <Route 
-          path="/login" 
+        <Route
+          path="/login"
           element={<Login />}>
 
         </Route>
-        
-        <Route 
-          path="/admin" 
+
+        <Route
+          path="/admin"
           element={
             <AdminRoute>
 
-            <Admin />
+              <Admin />
 
             </AdminRoute>
-            }>
+          }>
         </Route>
 
         <Route
-        path="/catalog"
-        element={
-          <CatalogPage />
-        }
+          path="/catalog"
+          element={
+            <CatalogPage />
+          }
         >
-          
+
+        </Route>
+        <Route
+          path="/pedidos"
+          element={
+            <AdminRoute>
+              <Orders />
+            </AdminRoute>
+          }
+        >
         </Route>
       </Routes>
       <ToastContainer />

@@ -66,11 +66,11 @@ export default function Admin() {
             await loadPieces();
             setPieceToDelete(null);
             toast.success("Peça removida com sucesso", {
-                 className: "toast success-toast"
+                className: "toast success-toast"
             });
-        } catch(error) {
+        } catch (error) {
             toast.error("Não foi possível cadastrar a peça", {
-            className: "toast error-toast"
+                className: "toast error-toast"
             })
         }
     }
@@ -106,14 +106,14 @@ export default function Admin() {
                     <a href="#" className="nav-item active">
                         Dashboard
                     </a>
-                    
+
                     <Link to="/catalog" className="nav-item">
                         Peças
                     </Link>
 
-                    <a href="#" className="nav-item">
+                    <Link to="/pedidos" className="nav-item">
                         Pedidos
-                    </a>
+                    </Link>
 
                     <a href="#" className="nav-item">
                         Configurações
@@ -472,10 +472,10 @@ export default function Admin() {
                     ===========================================
                 */}
                 {showForm && (
-                    <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} pieceToUpdate={pieceToUpdate}  setPieceToUpdate={setPieceToUpdate}/>
+                    <PieceForm setShowForm={setShowForm} onSuccess={loadPieces} pieceToUpdate={pieceToUpdate} setPieceToUpdate={setPieceToUpdate} />
                 )}
 
-                
+
                 {/* ===========================================
                     Renderização do Modal
                     ===========================================

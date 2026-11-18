@@ -101,7 +101,7 @@ export default function Orders() {
         <div className="sidebar-logo"><img src="/logo.jpeg" alt="Mimos Crochê" className="admin-logo" /></div>
         <nav className="sidebar-nav">
             <Link to="/admin" className="nav-item">Dashboard</Link>
-            <Link to="/catalogo" className="nav-item">Peças</Link>
+            <Link to="/catalog" className="nav-item">Peças</Link>
             <Link to="/pedidos" className="nav-item active">Pedidos</Link>
             <a href="#" className="nav-item">Configurações</a>
         </nav>
@@ -123,10 +123,18 @@ export default function Orders() {
             ===========================================
         */}
         <section className="overview">
-            <div className="stat-card"><span className="stat-label">Total em pedidos</span><strong className="stat-value stat-value-small">{money(total)}</strong></div>
-            <div className="stat-card"><span className="stat-label">Entradas recebidas</span><strong className="stat-value stat-value-small">{money(received)}</strong></div>
-            <div className="stat-card"><span className="stat-label">Em produção</span><strong className="stat-value">{inProduction}</strong></div>
-            <div className="stat-card"><span className="stat-label">Entregues</span><strong className="stat-value">{delivered}</strong></div>
+            <div className="stat-card">
+                <span className="stat-label">Total em pedidos</span><strong className="stat-value stat-value-small">{money(total)}</strong>
+            </div>
+            <div className="stat-card">
+                <span className="stat-label">Entradas recebidas</span><strong className="stat-value stat-value-small">{money(received)}</strong>
+            </div>
+            <div className="stat-card">
+                <span className="stat-label">Em produção</span><strong className="stat-value">{inProduction}</strong>
+            </div>
+            <div className="stat-card">
+                <span className="stat-label">Entregues</span><strong className="stat-value">{delivered}</strong>
+            </div>
         </section>
         
         {/* ===========================================
@@ -176,7 +184,11 @@ export default function Orders() {
                         <div><span className="order-number">Pedido #{order.order_id}</span><h4>{order.client_name}</h4></div>
                         <span className={`order-status status-${order.status}`}>{statusLabels[order.status]}</span>
                     </div>
-                    <div className="order-product"><span>{order.product_name}</span><small>Cor: {order.product_color}</small></div>
+
+                    <div className="order-product">
+                        <span>{order.product_name}</span><small>Cor: {order.product_color}</small>
+                    </div>
+                    
                     <div className="order-card-details">
                         <div><span>Total</span><strong>{money(order.total_price)}</strong></div>
                         <div><span>Valor de entrada</span><strong>{money(order.down_payment)}</strong></div>
